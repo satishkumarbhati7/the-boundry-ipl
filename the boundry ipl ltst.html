@@ -1,0 +1,1459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Boundary — IPL Dining | Delhi</title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Exo+2:wght@300;400;500;600&family=Black+Han+Sans&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root{
+  --navy:#060b18;--deep:#0b1220;--card:#101827;--cardl:#141f31;
+  --gold:#f5c518;--amber:#f59e0b;--orange:#ea580c;--red:#dc2626;
+  --blue:#1d4ed8;--cyan:#06b6d4;--green:#16a34a;
+  --text:#e8eaf0;--muted:#7a8499;--border:rgba(245,197,24,0.13);
+  --glow:0 0 36px rgba(245,197,24,0.28);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--navy);color:var(--text);font-family:'Exo 2',sans-serif;overflow-x:hidden}
+
+/* ===== NAV ===== */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  background:rgba(6,11,24,0.96);backdrop-filter:blur(24px);
+  border-bottom:1px solid var(--border);height:64px;
+  padding:0 24px;display:flex;align-items:center;justify-content:space-between;
+}
+.nav-logo{font-family:'Black Han Sans',sans-serif;font-size:1.45rem;color:var(--gold);cursor:pointer;display:flex;align-items:center;gap:8px}
+.nav-logo em{color:var(--text);font-style:normal}
+.nav-links{display:flex;gap:2px}
+.nav-link{padding:8px 13px;border-radius:8px;cursor:pointer;font-family:'Rajdhani',sans-serif;font-weight:600;font-size:0.92rem;color:var(--muted);transition:all .2s;border:none;background:none}
+.nav-link:hover,.nav-link.active{color:var(--gold);background:rgba(245,197,24,.09)}
+.nav-right{display:flex;align-items:center;gap:10px}
+.nav-cta{background:linear-gradient(135deg,var(--gold),var(--amber));color:var(--navy)!important;padding:8px 18px;border-radius:8px;font-family:'Rajdhani',sans-serif;font-weight:700;cursor:pointer;border:none;font-size:.92rem;transition:all .2s}
+.nav-cta:hover{transform:translateY(-1px);box-shadow:var(--glow)}
+.cart-icon{position:relative;cursor:pointer;padding:8px;color:var(--text);font-size:1.15rem}
+.cart-count{position:absolute;top:1px;right:1px;background:var(--red);color:#fff;width:17px;height:17px;border-radius:50%;font-size:.6rem;font-weight:700;display:flex;align-items:center;justify-content:center}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px}
+.hamburger span{width:22px;height:2px;background:var(--gold);border-radius:2px;transition:all .3s}
+.mobile-menu{display:none;position:fixed;top:64px;left:0;right:0;z-index:999;background:rgba(6,11,24,.98);border-bottom:1px solid var(--border);flex-direction:column;padding:12px 20px 20px;gap:4px}
+.mobile-menu.open{display:flex}
+.mobile-menu .nav-link{padding:12px 16px;border-radius:8px;font-size:1rem}
+
+/* ===== PAGES ===== */
+.page{display:none;position:relative;z-index:1;padding-top:64px;min-height:100vh}
+.page.active{display:block}
+
+/* ===== HERO ===== */
+.hero{
+  position:relative;min-height:calc(100vh - 64px);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:40px 20px;overflow:hidden;
+}
+/* Stadium SVG sits as background */
+.hero-stadium{
+  position:absolute;inset:0;width:100%;height:100%;
+  pointer-events:none;overflow:hidden;
+}
+/* Overlay gradient atop SVG */
+.hero-overlay{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 100% 60% at 50% 100%, rgba(6,11,24,.98) 0%, rgba(6,11,24,.7) 40%, transparent 70%),
+    radial-gradient(ellipse 120% 30% at 50% 0%, rgba(6,11,24,.85) 0%, transparent 60%),
+    linear-gradient(180deg, rgba(6,11,24,.6) 0%, transparent 25%, transparent 60%, rgba(6,11,24,.9) 100%);
+  pointer-events:none;
+}
+.hero-content{position:relative;z-index:2}
+.hero-eyebrow{font-family:'Rajdhani',sans-serif;font-size:.8rem;font-weight:700;letter-spacing:4px;color:var(--orange);text-transform:uppercase;margin-bottom:14px;opacity:0;animation:fadeUp .6s .2s forwards}
+.hero-title{font-family:'Black Han Sans',sans-serif;font-size:clamp(2.8rem,9vw,7rem);line-height:.9;margin-bottom:18px;opacity:0;animation:fadeUp .6s .4s forwards}
+.hero-title .t1{color:var(--text);display:block;text-shadow:0 0 60px rgba(245,197,24,.15)}
+.hero-title .t2{background:linear-gradient(135deg,var(--gold) 20%,var(--orange) 80%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;display:block;filter:drop-shadow(0 0 30px rgba(245,197,24,.4))}
+.hero-title .t3{color:var(--text);display:block;font-size:clamp(1.6rem,5vw,3.8rem);letter-spacing:6px}
+.hero-sub{font-size:1.05rem;color:rgba(232,234,240,.7);max-width:480px;line-height:1.65;margin-bottom:32px;opacity:0;animation:fadeUp .6s .6s forwards}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;opacity:0;animation:fadeUp .6s .8s forwards}
+/* Live ticker */
+.live-ticker{
+  margin-top:30px;background:rgba(220,38,38,.12);border:1px solid rgba(220,38,38,.4);
+  border-radius:12px;padding:13px 20px;max-width:620px;width:100%;
+  display:flex;align-items:center;gap:12px;
+  opacity:0;animation:fadeUp .6s 1s forwards;
+}
+.live-dot{width:9px;height:9px;background:var(--red);border-radius:50%;animation:blink 1s infinite;flex-shrink:0}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.15}}
+.live-text{font-family:'Rajdhani',sans-serif;font-size:.92rem;font-weight:600}
+.live-score{color:var(--gold);font-weight:700}
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+
+/* ===== SECTION ===== */
+section{padding:60px 20px;max-width:1180px;margin:0 auto}
+.sec-label{font-family:'Rajdhani',sans-serif;font-size:.78rem;font-weight:700;letter-spacing:4px;color:var(--orange);text-transform:uppercase;margin-bottom:8px}
+.sec-title{font-family:'Black Han Sans',sans-serif;font-size:clamp(1.7rem,3.5vw,2.6rem);margin-bottom:6px;line-height:1.1}
+.sec-sub{color:var(--muted);font-size:.95rem;margin-bottom:32px;max-width:500px}
+.gold{color:var(--gold)}
+
+/* ===== BUTTONS ===== */
+.btn-p{background:linear-gradient(135deg,var(--gold),var(--amber));color:var(--navy);padding:13px 26px;border-radius:10px;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:1rem;cursor:pointer;border:none;transition:all .25s;display:inline-flex;align-items:center;gap:8px}
+.btn-p:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(245,197,24,.38)}
+.btn-o{background:transparent;border:2px solid var(--gold);color:var(--gold);padding:12px 26px;border-radius:10px;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:1rem;cursor:pointer;transition:all .25s}
+.btn-o:hover{background:rgba(245,197,24,.1);transform:translateY(-2px)}
+
+/* ===== CARDS ===== */
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(255px,1fr));gap:18px}
+.dish-card{background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;transition:all .3s;cursor:pointer;position:relative}
+.dish-card:hover{transform:translateY(-5px);border-color:rgba(245,197,24,.4);box-shadow:var(--glow)}
+.dish-img{width:100%;height:175px;display:flex;align-items:center;justify-content:center;font-size:4.5rem;position:relative;overflow:hidden}
+.dish-img::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,transparent 40%,rgba(6,11,24,.65))}
+.dish-body{padding:15px}
+.dish-name{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:1.05rem;margin-bottom:3px}
+.dish-desc{font-size:.82rem;color:var(--muted);margin-bottom:11px;line-height:1.4}
+.dish-footer{display:flex;align-items:center;justify-content:space-between}
+.dish-price{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:1.1rem;color:var(--gold)}
+.add-btn{background:rgba(245,197,24,.13);border:1px solid rgba(245,197,24,.28);color:var(--gold);padding:6px 14px;border-radius:7px;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:.85rem;cursor:pointer;transition:all .2s}
+.add-btn:hover{background:var(--gold);color:var(--navy)}
+.badge{position:absolute;top:11px;left:11px;z-index:1;padding:4px 9px;border-radius:6px;font-size:.68rem;font-family:'Rajdhani',sans-serif;font-weight:700;letter-spacing:1px}
+
+/* ===== SCOREBOARD ===== */
+.scoreboard{background:var(--card);border:2px solid rgba(245,197,24,.35);border-radius:16px;padding:22px;position:relative;overflow:hidden}
+.scoreboard::before{content:'LIVE';position:absolute;top:14px;right:14px;background:var(--red);color:#fff;padding:3px 9px;border-radius:5px;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:.72rem;letter-spacing:2px;animation:blink 1.2s infinite}
+.score-teams{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.team-score{text-align:center}
+.team-abbr{font-family:'Black Han Sans',sans-serif;font-size:2rem}
+.team-runs{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:1.5rem;margin-top:3px}
+.score-vs{font-family:'Rajdhani',sans-serif;font-size:1.1rem;color:var(--muted);font-weight:600}
+.match-info-bar{text-align:center;padding:9px;background:rgba(245,197,24,.07);border-radius:8px;font-family:'Rajdhani',sans-serif;font-size:.88rem;color:var(--muted)}
+
+/* ===== MENU ===== */
+.menu-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px}
+.menu-tab{padding:9px 18px;border-radius:9px;cursor:pointer;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:.92rem;border:1px solid var(--border);color:var(--muted);transition:all .2s;background:transparent}
+.menu-tab.active,.menu-tab:hover{background:var(--gold);color:var(--navy);border-color:var(--gold)}
+.menu-cat{display:none}
+.menu-cat.active{display:grid;grid-template-columns:repeat(auto-fill,minmax(255px,1fr));gap:18px}
+
+/* ===== GAME ZONE ===== */
+.pred-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:22px;transition:all .3s}
+.pred-card:hover{border-color:rgba(245,197,24,.35)}
+.pred-title{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:1.08rem;margin-bottom:5px}
+.pred-desc{font-size:.82rem;color:var(--muted);margin-bottom:14px}
+.pred-pts{display:inline-flex;align-items:center;gap:6px;background:rgba(245,197,24,.1);border:1px solid rgba(245,197,24,.22);border-radius:6px;padding:4px 11px;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:.82rem;color:var(--gold);margin-bottom:14px}
+.pred-opts{display:flex;flex-direction:column;gap:8px}
+.pred-opt{padding:11px 15px;border-radius:9px;border:1px solid var(--border);cursor:pointer;font-family:'Rajdhani',sans-serif;font-weight:600;transition:all .2s;display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.02)}
+.pred-opt:hover{background:rgba(245,197,24,.07);border-color:rgba(245,197,24,.35)}
+.pred-opt.selected{background:rgba(245,197,24,.14);border-color:var(--gold);color:var(--gold)}
+.tlogo{width:27px;height:27px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:900;color:#fff;flex-shrink:0}
+.sub-pred{width:100%;margin-top:14px;padding:12px;background:linear-gradient(135deg,var(--gold),var(--amber));color:var(--navy);border:none;border-radius:9px;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:.97rem;cursor:pointer;transition:all .2s}
+.sub-pred:hover{transform:translateY(-1px);box-shadow:var(--glow)}
+.sub-pred:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.lb-row{display:grid;grid-template-columns:40px 1fr auto;gap:10px;align-items:center;padding:13px 15px;border-radius:9px;background:rgba(255,255,255,.02);border:1px solid transparent;transition:all .2s;margin-bottom:7px}
+.lb-row:hover{border-color:var(--border)}
+.lb-row.top3{border-color:rgba(245,197,24,.18);background:rgba(245,197,24,.05)}
+.r1{color:var(--gold)}.r2{color:#aaa}.r3{color:#cd7f32}
+.rank-n{font-family:'Black Han Sans',sans-serif;font-size:1.05rem;text-align:center}
+.pts-badge{background:rgba(245,197,24,.1);border:1px solid rgba(245,197,24,.22);padding:5px 12px;border-radius:7px;font-family:'Rajdhani',sans-serif;font-weight:700;color:var(--gold);font-size:.88rem}
+
+/* ===== OFFERS ===== */
+.coupon-card{background:var(--card);border:2px dashed rgba(245,197,24,.3);border-radius:16px;padding:22px;position:relative;overflow:hidden;transition:all .3s}
+.coupon-card:hover{border-color:var(--gold);transform:translateY(-3px)}
+.coupon-card::before{content:'';position:absolute;left:-1px;top:50%;transform:translateY(-50%);width:19px;height:19px;border-radius:50%;background:var(--navy);border:2px dashed rgba(245,197,24,.3)}
+.coupon-card::after{content:'';position:absolute;right:-1px;top:50%;transform:translateY(-50%);width:19px;height:19px;border-radius:50%;background:var(--navy);border:2px dashed rgba(245,197,24,.3)}
+.coupon-pct{font-family:'Black Han Sans',sans-serif;font-size:2.8rem;background:linear-gradient(135deg,var(--gold),var(--orange));-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1}
+.coupon-code{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:1.05rem;background:rgba(245,197,24,.09);border:1px solid rgba(245,197,24,.22);display:inline-block;padding:5px 14px;border-radius:6px;letter-spacing:3px;color:var(--gold);margin:7px 0;cursor:pointer;transition:all .2s}
+.coupon-code:hover{background:rgba(245,197,24,.18)}
+.coupon-terms{font-size:.75rem;color:var(--muted);margin-top:6px}
+.match-offer{background:linear-gradient(135deg,var(--card),rgba(29,78,216,.18));border:1px solid rgba(29,78,216,.28);border-radius:15px;padding:22px;display:flex;align-items:center;gap:18px;flex-wrap:wrap;transition:all .3s}
+.match-offer:hover{border-color:var(--blue);transform:translateY(-2px)}
+
+/* ===== CONTACT ===== */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+.form-grp{margin-bottom:16px}
+.form-lbl{display:block;font-family:'Rajdhani',sans-serif;font-weight:600;font-size:.88rem;color:var(--muted);margin-bottom:6px}
+.form-inp,.form-sel,.form-ta{width:100%;padding:12px 15px;border-radius:9px;background:rgba(255,255,255,.04);border:1px solid var(--border);color:var(--text);font-family:'Exo 2',sans-serif;font-size:.92rem;transition:all .2s;outline:none}
+.form-inp:focus,.form-sel:focus,.form-ta:focus{border-color:var(--gold);background:rgba(245,197,24,.04)}
+.form-sel option{background:var(--deep)}
+.form-ta{resize:vertical;min-height:95px}
+.map-box{background:var(--card);border:1px solid var(--border);border-radius:15px;height:280px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px;color:var(--muted)}
+.info-card{background:var(--card);border:1px solid var(--border);border-radius:15px;padding:22px}
+.info-row{display:flex;gap:13px;align-items:flex-start;margin-bottom:16px}
+.info-ico{width:38px;height:38px;background:rgba(245,197,24,.1);border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--gold)}
+
+/* ===== PAGE HERO ===== */
+.page-hero{background:linear-gradient(135deg,var(--deep),var(--card));border-bottom:1px solid var(--border);padding:38px 20px;text-align:center}
+.page-hero h1{font-family:'Black Han Sans',sans-serif;font-size:clamp(1.9rem,4.5vw,3.2rem);margin-bottom:7px}
+.page-hero p{color:var(--muted);max-width:500px;margin:0 auto}
+
+/* ===== STATS ===== */
+.stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:14px;margin:32px 0}
+.stat-item{background:var(--card);border:1px solid var(--border);border-radius:11px;padding:18px;text-align:center}
+.stat-val{font-family:'Black Han Sans',sans-serif;font-size:1.9rem;color:var(--gold);display:block}
+.stat-lbl{font-size:.78rem;color:var(--muted);margin-top:3px}
+
+/* ===== POINTS DISPLAY ===== */
+.pts-display{background:linear-gradient(135deg,rgba(245,197,24,.09),rgba(234,88,12,.09));border:1px solid rgba(245,197,24,.28);border-radius:15px;padding:18px 22px;display:flex;align-items:center;justify-content:space-between;margin-bottom:28px;flex-wrap:wrap;gap:14px}
+.pts-info .lbl{font-size:.82rem;color:var(--muted)}
+.pts-info .val{font-family:'Black Han Sans',sans-serif;font-size:1.9rem;color:var(--gold)}
+
+/* ===== TOAST ===== */
+.toast{position:fixed;bottom:88px;left:50%;transform:translateX(-50%) translateY(110px);background:var(--gold);color:var(--navy);padding:11px 22px;border-radius:9px;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:.97rem;z-index:9999;transition:transform .3s;white-space:nowrap;box-shadow:0 8px 30px rgba(0,0,0,.5)}
+.toast.show{transform:translateX(-50%) translateY(0)}
+
+/* ===== WHATSAPP ===== */
+.wa-float{position:fixed;bottom:22px;right:20px;z-index:9998;width:54px;height:54px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.5rem;color:#fff;cursor:pointer;box-shadow:0 4px 18px rgba(37,211,102,.45);transition:all .25s;text-decoration:none;animation:waggle 4s 3s ease-in-out infinite}
+.wa-float:hover{transform:scale(1.1)}
+@keyframes waggle{0%,90%,100%{transform:rotate(0)}92%{transform:rotate(-14deg)}96%{transform:rotate(14deg)}}
+
+/* ===== CONFETTI ===== */
+.cpiece{position:fixed;top:-10px;z-index:9999;animation:cfall 2.5s ease-in forwards;pointer-events:none;border-radius:3px}
+@keyframes cfall{0%{transform:translateY(-10px) rotate(0);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
+
+/* ===== DIVIDER ===== */
+.divider{height:1px;background:var(--border);margin:18px 0}
+
+/* ===== REVEAL ===== */
+.reveal{opacity:0;transform:translateY(22px);transition:all .5s}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* ====================================================
+   SUB-ADMIN PANEL
+   ==================================================== */
+#admin-overlay{
+  display:none;position:fixed;inset:0;z-index:10000;
+  background:rgba(6,11,24,.97);backdrop-filter:blur(8px);
+  overflow-y:auto;
+}
+#admin-overlay.open{display:block}
+.admin-wrap{max-width:900px;margin:0 auto;padding:30px 20px 60px}
+.admin-header{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:28px;padding-bottom:18px;border-bottom:1px solid var(--border);
+}
+.admin-logo{font-family:'Black Han Sans',sans-serif;font-size:1.6rem;color:var(--gold)}
+.admin-logo span{font-size:.85rem;color:var(--muted);font-family:'Exo 2',sans-serif;display:block;font-weight:400}
+.close-admin{background:rgba(220,38,38,.15);border:1px solid rgba(220,38,38,.3);color:var(--red);padding:9px 18px;border-radius:8px;cursor:pointer;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:.9rem}
+/* Admin Login */
+#admin-login{max-width:380px;margin:80px auto;background:var(--card);border:1px solid var(--border);border-radius:18px;padding:36px}
+#admin-login h2{font-family:'Black Han Sans',sans-serif;font-size:1.8rem;margin-bottom:6px}
+#admin-login p{color:var(--muted);font-size:.88rem;margin-bottom:24px}
+#admin-panel{display:none}
+#admin-panel.open{display:block}
+/* Admin Tabs */
+.admin-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px}
+.atab{padding:10px 18px;border-radius:9px;cursor:pointer;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:.92rem;border:1px solid var(--border);color:var(--muted);transition:all .2s;background:transparent}
+.atab.active,.atab:hover{background:var(--gold);color:var(--navy);border-color:var(--gold)}
+.apanel{display:none}
+.apanel.active{display:block}
+/* Admin Form */
+.af-grp{margin-bottom:18px}
+.af-lbl{display:block;font-family:'Rajdhani',sans-serif;font-weight:600;font-size:.88rem;color:var(--muted);margin-bottom:7px}
+.af-inp,.af-sel,.af-ta{width:100%;padding:12px 15px;border-radius:9px;background:rgba(255,255,255,.05);border:1px solid var(--border);color:var(--text);font-family:'Exo 2',sans-serif;font-size:.92rem;transition:all .2s;outline:none}
+.af-inp:focus,.af-sel:focus,.af-ta:focus{border-color:var(--gold);background:rgba(245,197,24,.05)}
+.af-sel option{background:var(--deep)}
+.af-ta{min-height:90px;resize:vertical}
+.af-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+/* Admin Cards */
+.admin-card{background:var(--cardl);border:1px solid var(--border);border-radius:14px;padding:22px;margin-bottom:18px}
+.admin-card h3{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:1.1rem;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+/* Match preview */
+.match-preview{background:rgba(245,197,24,.06);border:1px solid rgba(245,197,24,.18);border-radius:10px;padding:14px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+/* Upload box */
+.upload-box{
+  border:2px dashed rgba(245,197,24,.25);border-radius:11px;padding:28px;
+  text-align:center;cursor:pointer;transition:all .25s;
+  background:rgba(245,197,24,.03);
+}
+.upload-box:hover{border-color:var(--gold);background:rgba(245,197,24,.07)}
+.upload-box input[type=file]{display:none}
+.upload-preview{width:100%;height:160px;object-fit:cover;border-radius:8px;margin-top:12px;display:none}
+/* Announcements */
+.ann-item{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:10px;display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.ann-text{flex:1;font-size:.9rem;line-height:1.5}
+.ann-del{background:rgba(220,38,38,.1);border:1px solid rgba(220,38,38,.25);color:var(--red);padding:5px 10px;border-radius:7px;cursor:pointer;font-size:.8rem;font-family:'Rajdhani',sans-serif;font-weight:700;flex-shrink:0}
+/* Save btn */
+.save-btn{background:linear-gradient(135deg,var(--gold),var(--amber));color:var(--navy);padding:12px 28px;border-radius:9px;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:.97rem;cursor:pointer;border:none;transition:all .2s;display:flex;align-items:center;gap:8px}
+.save-btn:hover{transform:translateY(-1px);box-shadow:var(--glow)}
+.danger-btn{background:rgba(220,38,38,.12);border:1px solid rgba(220,38,38,.3);color:var(--red);padding:10px 20px;border-radius:9px;cursor:pointer;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:.88rem}
+/* Status */
+.status-dot{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:6px}
+.status-live{background:var(--red);animation:blink 1s infinite}
+.status-soon{background:var(--amber)}
+.status-done{background:var(--muted)}
+/* Upcoming match rows */
+.um-row{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:10px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.um-row .teams{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:1rem;flex:1}
+.um-row .meta{font-size:.8rem;color:var(--muted)}
+
+/* ===== FOOTER ===== */
+footer{background:var(--deep);border-top:1px solid var(--border);padding:38px 20px;text-align:center;position:relative;z-index:1}
+.foot-logo{font-family:'Black Han Sans',sans-serif;font-size:1.7rem;color:var(--gold)}
+.foot-tag{color:var(--muted);font-size:.88rem;margin:7px 0 18px}
+.foot-links{display:flex;justify-content:center;gap:18px;flex-wrap:wrap;margin-bottom:14px}
+.foot-link{color:var(--muted);font-size:.88rem;cursor:pointer;transition:color .2s}
+.foot-link:hover{color:var(--gold)}
+.foot-copy{font-size:.77rem;color:rgba(122,132,153,.5)}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:768px){
+  .nav-links{display:none}
+  .hamburger{display:flex}
+  nav .nav-cta{display:none}
+  .contact-grid{grid-template-columns:1fr}
+  .af-grid{grid-template-columns:1fr}
+  section{padding:40px 16px}
+}
+
+/* Banner announcement bar */
+#announcement-bar{
+  background:linear-gradient(90deg,var(--orange),var(--red));
+  padding:9px 20px;text-align:center;
+  font-family:'Rajdhani',sans-serif;font-weight:700;font-size:.9rem;
+  position:relative;z-index:999;display:none;
+}
+#announcement-bar.visible{display:block}
+
+/* Hero banner override (admin-set) */
+#hero-custom-banner{
+  position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;opacity:0;transition:opacity .5s;pointer-events:none;z-index:0;
+}
+#hero-custom-banner.visible{opacity:0.22}
+</style>
+</head>
+<body>
+
+<!-- ANNOUNCEMENT BAR -->
+<div id="announcement-bar">
+  <span id="ann-bar-text">🔥 MATCH DAY: MI vs CSK Tonight! Order during the match and get 3× Points on all orders!</span>
+  <span style="margin-left:12px;opacity:.7;cursor:pointer;font-size:1rem" onclick="document.getElementById('announcement-bar').style.display='none'">✕</span>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo" onclick="showPage('home')">🏏 The <em>Boundary</em></div>
+  <div class="nav-links">
+    <button class="nav-link active" onclick="showPage('home')">Home</button>
+    <button class="nav-link" onclick="showPage('menu')">Menu</button>
+    <button class="nav-link" onclick="showPage('gamezone')">🏆 Game Zone</button>
+    <button class="nav-link" onclick="showPage('offers')">Offers</button>
+    <button class="nav-link" onclick="showPage('contact')">Book Table</button>
+  </div>
+  <div class="nav-right">
+    <div class="cart-icon" onclick="showToast('🛒 Cart: sign in to checkout!')">
+      <i class="fas fa-shopping-cart"></i>
+      <span class="cart-count" id="cartCount">0</span>
+    </div>
+    <button class="nav-cta" onclick="showPage('contact')">Reserve Table</button>
+    <div class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <button class="nav-link" onclick="showPage('home');toggleMenu()">🏠 Home</button>
+  <button class="nav-link" onclick="showPage('menu');toggleMenu()">🍽️ Menu</button>
+  <button class="nav-link" onclick="showPage('gamezone');toggleMenu()">🏆 Game Zone</button>
+  <button class="nav-link" onclick="showPage('offers');toggleMenu()">🎁 Offers</button>
+  <button class="nav-link" onclick="showPage('contact');toggleMenu()">📅 Book Table</button>
+</div>
+
+<!-- ============================================================
+     HOME PAGE
+     ============================================================ -->
+<div class="page active" id="page-home">
+
+  <!-- HERO -->
+  <div class="hero" id="main-hero">
+
+    <!-- Custom admin banner image layer -->
+    <img id="hero-custom-banner" src="" alt="">
+
+    <!-- CRICKET STADIUM SVG BACKGROUND -->
+    <div class="hero-stadium">
+      <svg viewBox="0 0 1400 700" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%">
+        <!-- Sky gradient -->
+        <defs>
+          <radialGradient id="skyGrad" cx="50%" cy="0%" r="70%">
+            <stop offset="0%" stop-color="#0a1a3a"/>
+            <stop offset="100%" stop-color="#060b18"/>
+          </radialGradient>
+          <radialGradient id="pitchGrad" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#3d7a3d"/>
+            <stop offset="100%" stop-color="#2a5c2a"/>
+          </radialGradient>
+          <radialGradient id="innerGrad" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#5aa35a"/>
+            <stop offset="100%" stop-color="#3d7a3d"/>
+          </radialGradient>
+          <radialGradient id="lightGlow1" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#fffde7" stop-opacity="0.55"/>
+            <stop offset="100%" stop-color="#fffde7" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="lightGlow2" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#fff9c4" stop-opacity="0.4"/>
+            <stop offset="100%" stop-color="#fff9c4" stop-opacity="0"/>
+          </radialGradient>
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="4" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <filter id="softglow">
+            <feGaussianBlur stdDeviation="8" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+
+        <!-- SKY -->
+        <rect width="1400" height="700" fill="url(#skyGrad)"/>
+
+        <!-- Stars -->
+        <g opacity="0.6">
+          <circle cx="100" cy="40" r="1.5" fill="#fff" opacity=".8"/>
+          <circle cx="200" cy="20" r="1" fill="#fff" opacity=".6"/>
+          <circle cx="350" cy="55" r="1.8" fill="#fff" opacity=".7"/>
+          <circle cx="500" cy="30" r="1.2" fill="#fff" opacity=".5"/>
+          <circle cx="650" cy="15" r="1.5" fill="#fff" opacity=".8"/>
+          <circle cx="780" cy="45" r="1" fill="#fff" opacity=".6"/>
+          <circle cx="900" cy="25" r="1.3" fill="#fff" opacity=".7"/>
+          <circle cx="1050" cy="50" r="1.8" fill="#fff" opacity=".5"/>
+          <circle cx="1200" cy="18" r="1.2" fill="#fff" opacity=".8"/>
+          <circle cx="1300" cy="42" r="1.5" fill="#fff" opacity=".6"/>
+          <circle cx="160" cy="80" r="1" fill="#fff" opacity=".4"/>
+          <circle cx="440" cy="75" r="1.4" fill="#fff" opacity=".5"/>
+          <circle cx="820" cy="70" r="1" fill="#fff" opacity=".6"/>
+          <circle cx="1100" cy="85" r="1.3" fill="#fff" opacity=".4"/>
+        </g>
+
+        <!-- FLOODLIGHT TOWERS - Left -->
+        <!-- Tower 1 far left -->
+        <g>
+          <rect x="88" y="160" width="10" height="320" fill="#1a2535" rx="2"/>
+          <rect x="80" y="460" width="26" height="12" fill="#1a2535" rx="2"/>
+          <!-- Arm -->
+          <rect x="88" y="155" width="50" height="6" fill="#1a2535" rx="2"/>
+          <!-- Lights array -->
+          <rect x="128" y="140" width="32" height="22" fill="#1e2d42" rx="3"/>
+          <rect x="131" y="143" width="6" height="5" fill="#fffde7" rx="1"/>
+          <rect x="139" y="143" width="6" height="5" fill="#fffde7" rx="1"/>
+          <rect x="147" y="143" width="6" height="5" fill="#fffde7" rx="1"/>
+          <rect x="131" y="150" width="6" height="5" fill="#fffde7" rx="1"/>
+          <rect x="139" y="150" width="6" height="5" fill="#fffde7" rx="1"/>
+          <rect x="147" y="150" width="6" height="5" fill="#fffde7" rx="1"/>
+          <!-- Glow beam -->
+          <ellipse cx="144" cy="140" rx="90" ry="50" fill="url(#lightGlow1)" opacity="0.7">
+            <animate attributeName="opacity" values="0.5;0.8;0.5" dur="3s" repeatCount="indefinite"/>
+          </ellipse>
+        </g>
+
+        <!-- Tower 2 left-center -->
+        <g>
+          <rect x="280" y="130" width="10" height="300" fill="#1a2535" rx="2"/>
+          <rect x="272" y="420" width="26" height="12" fill="#1a2535" rx="2"/>
+          <rect x="280" y="125" width="50" height="6" fill="#1a2535" rx="2"/>
+          <rect x="320" y="108" width="32" height="22" fill="#1e2d42" rx="3"/>
+          <rect x="323" y="111" width="6" height="5" fill="#fffde7" rx="1"/>
+          <rect x="331" y="111" width="6" height="5" fill="#fffde7" rx="1"/>
+          <rect x="339" y="111" width="6" height="5" fill="#fffde7" rx="1"/>
+          <rect x="323" y="118" width="6" height="5" fill="#fffde7" rx="1"/>
+          <rect x="331" y="118" width="6" height="5" fill="#fffde7" rx="1"/>
+          <rect x="339" y="118" width="6" height="5" fill="#fffde7" rx="1"/>
+          <ellipse cx="336" cy="108" rx="90" ry="50" fill="url(#lightGlow1)" opacity="0.6">
+            <animate attributeName="opacity" values="0.4;0.7;0.4" dur="3.5s" repeatCount="indefinite"/>
+          </ellipse>
+        </g>
+
+        <!-- Tower far right -->
+        <g>
+          <rect x="1302" y="160" width="10" height="320" fill="#1a2535" rx="2"/>
+          <rect x="1294" y="460" width="26" height="12" fill="#1a2535" rx="2"/>
+          <rect x="1262" y="155" width="50" height="6" fill="#1a2535" rx="2"/>
+          <rect x="1240" y="140" width="32" height="22" fill="#1e2d42" rx="3"/>
+          <rect x="1243" y="143" width="6" height="5" fill="#fffde7" rx="1"/>
+          <rect x="1251" y="143" width="6" height="5" fill="#fffde7" rx="1"/>
+          <rect x="1259" y="143" width="6" height="5" fill="#fffde7" rx="1"/>
+          <rect x="1243" y="150" width="6" height="5" fill="#fffde7" rx="1"/>
+          <rect x="1251" y="150" width="6" height="5" fill="#fffde7" rx="1"/>
+          <rect x="1259" y="150" width="6" height="5" fill="#fffde7" rx="1"/>
+          <ellipse cx="1256" cy="140" rx="90" ry="50" fill="url(#lightGlow2)" opacity="0.7">
+            <animate attributeName="opacity" values="0.5;0.85;0.5" dur="4s" repeatCount="indefinite"/>
+          </ellipse>
+        </g>
+
+        <!-- Tower right-center -->
+        <g>
+          <rect x="1110" y="130" width="10" height="300" fill="#1a2535" rx="2"/>
+          <rect x="1102" y="420" width="26" height="12" fill="#1a2535" rx="2"/>
+          <rect x="1070" y="125" width="50" height="6" fill="#1a2535" rx="2"/>
+          <rect x="1048" y="108" width="32" height="22" fill="#1e2d42" rx="3"/>
+          <rect x="1051" y="111" width="6" height="5" fill="#fffde7" rx="1"/>
+          <rect x="1059" y="111" width="6" height="5" fill="#fffde7" rx="1"/>
+          <rect x="1067" y="111" width="6" height="5" fill="#fffde7" rx="1"/>
+          <rect x="1051" y="118" width="6" height="5" fill="#fffde7" rx="1"/>
+          <rect x="1059" y="118" width="6" height="5" fill="#fffde7" rx="1"/>
+          <rect x="1067" y="118" width="6" height="5" fill="#fffde7" rx="1"/>
+          <ellipse cx="1064" cy="108" rx="90" ry="50" fill="url(#lightGlow2)" opacity="0.6">
+            <animate attributeName="opacity" values="0.4;0.72;0.4" dur="3.2s" repeatCount="indefinite"/>
+          </ellipse>
+        </g>
+
+        <!-- STADIUM STANDS background -->
+        <!-- Left stands -->
+        <path d="M0 700 L0 280 Q180 240 360 260 L360 700Z" fill="#0f1c2e" opacity="0.9"/>
+        <path d="M0 700 L0 300 Q130 265 260 278 L260 700Z" fill="#0d1828"/>
+        <!-- Right stands -->
+        <path d="M1400 700 L1400 280 Q1220 240 1040 260 L1040 700Z" fill="#0f1c2e" opacity="0.9"/>
+        <path d="M1400 700 L1400 300 Q1270 265 1140 278 L1140 700Z" fill="#0d1828"/>
+        <!-- Top stands -->
+        <path d="M300 700 L280 290 Q700 230 1120 290 L1100 700Z" fill="#0e1b2d" opacity="0.8"/>
+
+        <!-- Crowd dots - left -->
+        <g opacity="0.55">
+          <circle cx="30" cy="340" r="3" fill="#3b82f6"/>
+          <circle cx="50" cy="350" r="2.5" fill="#ef4444"/>
+          <circle cx="70" cy="335" r="3" fill="#fbbf24"/>
+          <circle cx="90" cy="345" r="2" fill="#3b82f6"/>
+          <circle cx="110" cy="330" r="3" fill="#10b981"/>
+          <circle cx="130" cy="342" r="2.5" fill="#ef4444"/>
+          <circle cx="150" cy="325" r="3" fill="#fbbf24"/>
+          <circle cx="170" cy="338" r="2" fill="#3b82f6"/>
+          <circle cx="30" cy="365" r="2.5" fill="#fbbf24"/>
+          <circle cx="55" cy="372" r="3" fill="#3b82f6"/>
+          <circle cx="80" cy="360" r="2" fill="#ef4444"/>
+          <circle cx="105" cy="368" r="3" fill="#10b981"/>
+          <circle cx="130" cy="355" r="2.5" fill="#fbbf24"/>
+          <circle cx="155" cy="370" r="3" fill="#3b82f6"/>
+          <circle cx="40" cy="395" r="3" fill="#ef4444"/>
+          <circle cx="65" cy="385" r="2" fill="#fbbf24"/>
+          <circle cx="90" cy="398" r="2.5" fill="#3b82f6"/>
+          <circle cx="115" cy="390" r="3" fill="#10b981"/>
+          <circle cx="140" cy="400" r="2" fill="#ef4444"/>
+          <circle cx="165" cy="388" r="3" fill="#fbbf24"/>
+        </g>
+        <!-- Crowd - right -->
+        <g opacity="0.55">
+          <circle cx="1230" cy="340" r="3" fill="#3b82f6"/>
+          <circle cx="1250" cy="350" r="2.5" fill="#ef4444"/>
+          <circle cx="1270" cy="335" r="3" fill="#fbbf24"/>
+          <circle cx="1290" cy="345" r="2" fill="#3b82f6"/>
+          <circle cx="1310" cy="330" r="3" fill="#10b981"/>
+          <circle cx="1330" cy="342" r="2.5" fill="#ef4444"/>
+          <circle cx="1350" cy="325" r="3" fill="#fbbf24"/>
+          <circle cx="1370" cy="338" r="2" fill="#3b82f6"/>
+          <circle cx="1235" cy="365" r="2.5" fill="#fbbf24"/>
+          <circle cx="1258" cy="372" r="3" fill="#3b82f6"/>
+          <circle cx="1280" cy="360" r="2" fill="#ef4444"/>
+          <circle cx="1302" cy="368" r="3" fill="#10b981"/>
+          <circle cx="1325" cy="355" r="2.5" fill="#fbbf24"/>
+          <circle cx="1348" cy="370" r="3" fill="#3b82f6"/>
+          <circle cx="1240" cy="395" r="3" fill="#ef4444"/>
+          <circle cx="1265" cy="385" r="2" fill="#fbbf24"/>
+          <circle cx="1290" cy="398" r="2.5" fill="#3b82f6"/>
+          <circle cx="1315" cy="390" r="3" fill="#10b981"/>
+          <circle cx="1340" cy="400" r="2" fill="#ef4444"/>
+          <circle cx="1365" cy="388" r="3" fill="#fbbf24"/>
+        </g>
+        <!-- Crowd top center -->
+        <g opacity="0.45">
+          <circle cx="500" cy="280" r="2.5" fill="#3b82f6"/>
+          <circle cx="530" cy="275" r="2" fill="#ef4444"/>
+          <circle cx="560" cy="282" r="3" fill="#fbbf24"/>
+          <circle cx="590" cy="270" r="2.5" fill="#10b981"/>
+          <circle cx="620" cy="278" r="2" fill="#3b82f6"/>
+          <circle cx="650" cy="265" r="3" fill="#ef4444"/>
+          <circle cx="680" cy="275" r="2.5" fill="#fbbf24"/>
+          <circle cx="710" cy="268" r="2" fill="#3b82f6"/>
+          <circle cx="740" cy="280" r="3" fill="#10b981"/>
+          <circle cx="770" cy="270" r="2.5" fill="#ef4444"/>
+          <circle cx="800" cy="276" r="2" fill="#fbbf24"/>
+          <circle cx="830" cy="264" r="3" fill="#3b82f6"/>
+          <circle cx="860" cy="272" r="2.5" fill="#10b981"/>
+          <circle cx="890" cy="280" r="2" fill="#ef4444"/>
+        </g>
+
+        <!-- MAIN GROUND (oval) -->
+        <ellipse cx="700" cy="580" rx="420" ry="180" fill="url(#pitchGrad)"/>
+
+        <!-- Outfield mowing stripes -->
+        <g opacity="0.18">
+          <ellipse cx="700" cy="580" rx="410" ry="174" fill="none" stroke="#4a9a4a" stroke-width="18"/>
+          <ellipse cx="700" cy="580" rx="385" ry="162" fill="none" stroke="#2a5c2a" stroke-width="16"/>
+          <ellipse cx="700" cy="580" rx="358" ry="148" fill="none" stroke="#4a9a4a" stroke-width="15"/>
+          <ellipse cx="700" cy="580" rx="330" ry="134" fill="none" stroke="#2a5c2a" stroke-width="13"/>
+        </g>
+
+        <!-- Inner circle -->
+        <ellipse cx="700" cy="580" rx="145" ry="62" fill="url(#innerGrad)" opacity="0.9"/>
+        <ellipse cx="700" cy="580" rx="145" ry="62" fill="none" stroke="#fff" stroke-width="1.5" stroke-dasharray="8 4" opacity="0.4"/>
+
+        <!-- PITCH (rectangular center) -->
+        <rect x="660" y="530" width="80" height="100" fill="#c8a96e" rx="4"/>
+        <!-- Pitch stripes -->
+        <rect x="660" y="530" width="80" height="10" fill="#d4b880" rx="2"/>
+        <rect x="660" y="548" width="80" height="10" fill="#c0a060" opacity="0.5"/>
+        <rect x="660" y="566" width="80" height="10" fill="#d4b880" opacity="0.4"/>
+        <rect x="660" y="584" width="80" height="10" fill="#c0a060" opacity="0.5"/>
+        <rect x="660" y="602" width="80" height="10" fill="#d4b880" opacity="0.4"/>
+        <!-- Crease lines -->
+        <line x1="655" y1="545" x2="745" y2="545" stroke="#fff" stroke-width="2" opacity="0.7"/>
+        <line x1="655" y1="615" x2="745" y2="615" stroke="#fff" stroke-width="2" opacity="0.7"/>
+        <!-- Stumps (batsman end) -->
+        <line x1="693" y1="618" x2="693" y2="632" stroke="#e8c080" stroke-width="2.5"/>
+        <line x1="700" y1="618" x2="700" y2="632" stroke="#e8c080" stroke-width="2.5"/>
+        <line x1="707" y1="618" x2="707" y2="632" stroke="#e8c080" stroke-width="2.5"/>
+        <line x1="690" y1="617" x2="710" y2="617" stroke="#e8c080" stroke-width="2"/>
+        <!-- Stumps (bowler end) -->
+        <line x1="693" y1="531" x2="693" y2="517" stroke="#e8c080" stroke-width="2.5"/>
+        <line x1="700" y1="531" x2="700" y2="517" stroke="#e8c080" stroke-width="2.5"/>
+        <line x1="707" y1="531" x2="707" y2="517" stroke="#e8c080" stroke-width="2.5"/>
+        <line x1="690" y1="532" x2="710" y2="532" stroke="#e8c080" stroke-width="2"/>
+
+        <!-- Boundary rope -->
+        <ellipse cx="700" cy="580" rx="408" ry="172" fill="none" stroke="#fff" stroke-width="2" stroke-dasharray="6 8" opacity="0.55"/>
+
+        <!-- Fielder dots -->
+        <circle cx="580" cy="540" r="5" fill="#fff" opacity="0.7"/>
+        <circle cx="820" cy="540" r="5" fill="#fff" opacity="0.7"/>
+        <circle cx="600" cy="610" r="5" fill="#fff" opacity="0.7"/>
+        <circle cx="800" cy="608" r="5" fill="#fff" opacity="0.7"/>
+        <circle cx="700" cy="430" r="5" fill="#fff" opacity="0.7"/>
+        <circle cx="470" cy="575" r="5" fill="#fff" opacity="0.7"/>
+        <circle cx="930" cy="577" r="5" fill="#fff" opacity="0.7"/>
+
+        <!-- Cricket ball (in play animation) -->
+        <circle cx="640" cy="520" r="7" fill="#cc3322" filter="url(#glow)">
+          <animate attributeName="cx" values="640;680;700;680;640" dur="4s" repeatCount="indefinite"/>
+          <animate attributeName="cy" values="520;510;520;530;520" dur="4s" repeatCount="indefinite"/>
+        </circle>
+        <!-- Ball seam -->
+        <path d="M638 518 Q640 515 643 518 Q640 521 638 518" fill="none" stroke="#f5a0a0" stroke-width="1">
+          <animate attributeName="d" values="M638 518 Q640 515 643 518 Q640 521 638 518;M678 508 Q680 505 683 508 Q680 511 678 508;M698 518 Q700 515 703 518 Q700 521 698 518;M678 528 Q680 525 683 528 Q680 531 678 528;M638 518 Q640 515 643 518 Q640 521 638 518" dur="4s" repeatCount="indefinite"/>
+        </path>
+
+        <!-- Floodlight beams (subtle) -->
+        <path d="M160 165 L430 600 L480 600Z" fill="url(#lightGlow1)" opacity="0.06">
+          <animate attributeName="opacity" values="0.04;0.09;0.04" dur="3s" repeatCount="indefinite"/>
+        </path>
+        <path d="M1240 165 L970 600 L920 600Z" fill="url(#lightGlow2)" opacity="0.06">
+          <animate attributeName="opacity" values="0.04;0.09;0.04" dur="3.5s" repeatCount="indefinite"/>
+        </path>
+
+        <!-- Scoreboard (right side structure) -->
+        <rect x="1060" y="315" width="140" height="80" fill="#0d1828" rx="5"/>
+        <rect x="1063" y="318" width="134" height="74" fill="#111f33" rx="4"/>
+        <text x="1130" y="340" text-anchor="middle" font-family="monospace" font-size="11" fill="#f5c518">MI vs CSK</text>
+        <text x="1130" y="358" text-anchor="middle" font-family="monospace" font-size="14" font-weight="bold" fill="#e8eaf0">124/3  •  14.2</text>
+        <text x="1130" y="374" text-anchor="middle" font-family="monospace" font-size="10" fill="#7a8499">CRR 8.60</text>
+        <rect x="1063" y="378" width="134" height="11" fill="#f5c518" rx="0 0 3 3" opacity="0.15"/>
+
+        <!-- Dug-out areas -->
+        <rect x="380" y="490" width="60" height="25" fill="#0a1520" rx="3" opacity="0.7"/>
+        <text x="410" y="507" text-anchor="middle" font-family="monospace" font-size="9" fill="#4a6a8a">DUGOUT</text>
+        <rect x="960" y="490" width="60" height="25" fill="#0a1520" rx="3" opacity="0.7"/>
+        <text x="990" y="507" text-anchor="middle" font-family="monospace" font-size="9" fill="#4a6a8a">DUGOUT</text>
+      </svg>
+    </div>
+
+    <!-- OVERLAY -->
+    <div class="hero-overlay"></div>
+
+    <!-- HERO CONTENT -->
+    <div class="hero-content">
+      <div class="hero-eyebrow" id="hero-eyebrow-text">🏟️ IPL Season 2026 — Delhi's Premier Cricket ID</div>
+      <h1 class="hero-title">
+        <span class="t1">DINING. GLORY. FUN</span>
+        <span class="t2" id="hero-main-text">with THE BOUNDARY</span>
+        <span class="t3" id="hero-sub-text" style="font-size:clamp(1rem,3vw,2rem);letter-spacing:3px;color:var(--muted)">Delhi's #1 Cricket Dining Experience</span>
+      </h1>
+      <p class="hero-sub" id="hero-para-text">Delhi's ultimate match-day dining experience. Watch live IPL, predict winners, earn points, and unlock exclusive offers.</p>
+      <div class="hero-btns">
+        <button class="btn-p" onclick="showPage('menu')"><i class="fas fa-utensils"></i> Explore Menu</button>
+        <button class="btn-o" onclick="showPage('gamezone')">🏏 Play & Win</button>
+        <a href="https://wa.me/917290068096?text=Hi%21+I+found+you+on+The+Boundary+IPL+2026+%F0%9F%8F%8F+I%27d+love+to+book+a+table+%2F+know+more+about+offers!" target="_blank" style="display:inline-flex;align-items:center;gap:9px;padding:13px 26px;background:#25D366;color:#fff;border-radius:10px;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:1rem;text-decoration:none;transition:all .25s;border:none;cursor:pointer" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 28px rgba(37,211,102,0.5)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+          <i class="fab fa-whatsapp" style="font-size:1.25rem"></i> Click Here — Chat on WhatsApp
+        </a>
+      </div>
+      <div class="live-ticker">
+        <div class="live-dot"></div>
+        <div class="live-text" id="live-ticker-text">
+          🔴 LIVE: <span class="live-score" id="ticker-match">MI vs CSK</span> — 
+          <span class="live-score" id="ticker-score">MI 124/3 (14.2 ov)</span> | Order now = 
+          <span class="live-score">3× Points!</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <section>
+    <div class="stats-row reveal">
+      <div class="stat-item"><span class="stat-val">5K+</span><div class="stat-lbl">Happy Fans</div></div>
+      <div class="stat-item"><span class="stat-val">120+</span><div class="stat-lbl">Menu Items</div></div>
+      <div class="stat-item"><span class="stat-val">4.8⭐</span><div class="stat-lbl">Avg Rating</div></div>
+      <div class="stat-item"><span class="stat-val">10yr</span><div class="stat-lbl">Serving Delhi</div></div>
+    </div>
+  </section>
+
+  <!-- Upcoming Matches -->
+  <section style="padding-top:0">
+    <div class="sec-label">This Week</div>
+    <h2 class="sec-title">Upcoming <span class="gold">Matches</span></h2>
+    <p class="sec-sub">Plan your visit around live match screenings. Book your table in advance!</p>
+    <div id="upcoming-matches-display" style="display:flex;flex-direction:column;gap:12px;margin-bottom:36px">
+      <!-- Rendered by JS -->
+    </div>
+  </section>
+
+  <!-- Featured Dishes -->
+  <section style="padding-top:0">
+    <div class="sec-label">Fan Favourites</div>
+    <h2 class="sec-title">Signature <span class="gold">Dishes</span></h2>
+    <div class="cards-grid">
+      <div class="dish-card reveal">
+        <div class="dish-img" style="background:linear-gradient(135deg,#1a2a0a,#2a3a0a)">
+          <span style="position:relative;z-index:1">🍛</span>
+          <span class="badge" style="background:var(--red);color:#fff">🔥 HOT</span>
+        </div>
+        <div class="dish-body">
+          <div class="dish-name">Boundary Biryani</div>
+          <div class="dish-desc">Hyderabadi dum biryani with saffron & slow-cooked mutton.</div>
+          <div class="dish-footer"><div class="dish-price">₹349</div><button class="add-btn" onclick="addToCart(this,'Boundary Biryani')">+ Add</button></div>
+        </div>
+      </div>
+      <div class="dish-card reveal">
+        <div class="dish-img" style="background:linear-gradient(135deg,#2a1a0a,#3a2a0a)">
+          <span style="position:relative;z-index:1">🍗</span>
+          <span class="badge" style="background:var(--gold);color:var(--navy)">IPL SPECIAL</span>
+        </div>
+        <div class="dish-body">
+          <div class="dish-name">Six-Spice Chicken</div>
+          <div class="dish-desc">Tandoori-grilled chicken in six signature spices.</div>
+          <div class="dish-footer"><div class="dish-price">₹289</div><button class="add-btn" onclick="addToCart(this,'Six-Spice Chicken')">+ Add</button></div>
+        </div>
+      </div>
+      <div class="dish-card reveal">
+        <div class="dish-img" style="background:linear-gradient(135deg,#0a1a2a,#0a2a1a)">
+          <span style="position:relative;z-index:1">🥗</span>
+          <span class="badge" style="background:var(--green);color:#fff">🌱 NEW</span>
+        </div>
+        <div class="dish-body">
+          <div class="dish-name">Champion's Thali</div>
+          <div class="dish-desc">Dal makhani, paneer tikka, roti, raita & dessert.</div>
+          <div class="dish-footer"><div class="dish-price">₹399</div><button class="add-btn" onclick="addToCart(this,'Champion Thali')">+ Add</button></div>
+        </div>
+      </div>
+      <div class="dish-card reveal">
+        <div class="dish-img" style="background:linear-gradient(135deg,#2a0a1a,#1a0a2a)">
+          <span style="position:relative;z-index:1">🎉</span>
+          <span class="badge" style="background:var(--blue);color:#fff">GROUP</span>
+        </div>
+        <div class="dish-body">
+          <div class="dish-name">Victory Platter</div>
+          <div class="dish-desc">Nachos, wings, sliders & dips — the ultimate sharer.</div>
+          <div class="dish-footer"><div class="dish-price">₹599</div><button class="add-btn" onclick="addToCart(this,'Victory Platter')">+ Add</button></div>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:26px"><button class="btn-o" onclick="showPage('menu')">View Full Menu →</button></div>
+  </section>
+
+  <!-- Predict CTA -->
+  <section style="padding-top:0;padding-bottom:80px">
+    <div style="background:linear-gradient(135deg,rgba(245,197,24,.1),rgba(234,88,12,.1));border:1px solid rgba(245,197,24,.28);border-radius:20px;padding:38px 30px;text-align:center;position:relative;overflow:hidden">
+      <div style="position:absolute;top:-20px;right:-16px;font-size:8rem;opacity:.07">🏆</div>
+      <div class="sec-label" style="text-align:center">Game Zone</div>
+      <h2 style="font-family:'Black Han Sans',sans-serif;font-size:clamp(1.7rem,3.5vw,2.4rem);margin-bottom:9px">Predict. Win. <span class="gold">Feast Free!</span></h2>
+      <p style="color:var(--muted);max-width:460px;margin:0 auto 26px;font-size:.93rem">Predict match outcomes, earn points, and unlock discount coupons up to 50% OFF!</p>
+      <div style="display:flex;gap:11px;justify-content:center;flex-wrap:wrap">
+        <button class="btn-p" onclick="showPage('gamezone')">🏏 Play Now — Earn Points</button>
+        <button class="btn-o" onclick="showPage('offers')">🎁 View Rewards</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============================================================
+     MENU PAGE
+     ============================================================ -->
+<div class="page" id="page-menu">
+  <div class="page-hero"><h1>Our <span style="color:var(--gold)">Menu</span></h1><p>Bold flavours. Crafted for champions.</p></div>
+  <section>
+    <div style="background:linear-gradient(135deg,rgba(245,197,24,.13),rgba(234,88,12,.13));border:1px solid rgba(245,197,24,.28);border-radius:15px;padding:22px 26px;display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:36px;flex-wrap:wrap">
+      <div><h3 style="font-family:'Black Han Sans',sans-serif;font-size:1.4rem">🏏 Match Day <span class="gold">Combos</span></h3><p style="color:var(--muted);font-size:.88rem;margin-top:4px">15% OFF on combos during any live IPL match!</p></div>
+      <button class="btn-p" onclick="showToast('🎉 Combo deal activated! Add any combo.')">Grab Deal</button>
+    </div>
+    <div class="menu-tabs">
+      <button class="menu-tab active" onclick="switchMenu(this,'veg')">🥗 Veg</button>
+      <button class="menu-tab" onclick="switchMenu(this,'nonveg')">🍗 Non-Veg</button>
+      <button class="menu-tab" onclick="switchMenu(this,'starters')">🍢 Starters</button>
+      <button class="menu-tab" onclick="switchMenu(this,'drinks')">🥤 Drinks</button>
+      <button class="menu-tab" onclick="switchMenu(this,'combos')">🎁 Combos</button>
+    </div>
+    <div class="menu-cat active" id="cat-veg">
+      <div class="dish-card"><div class="dish-img" style="background:linear-gradient(135deg,#1a2a1a,#0a1a0a)"><span style="position:relative;z-index:1">🫕</span></div><div class="dish-body"><div class="dish-name">Paneer Tikka Masala</div><div class="dish-desc">Creamy tomato gravy with charred paneer.</div><div class="dish-footer"><div class="dish-price">₹269</div><button class="add-btn" onclick="addToCart(this,'Paneer Tikka')">+ Add</button></div></div></div>
+      <div class="dish-card"><div class="dish-img" style="background:linear-gradient(135deg,#1a1a0a,#2a2a0a)"><span style="position:relative;z-index:1">🍛</span></div><div class="dish-body"><div class="dish-name">Dal Makhani</div><div class="dish-desc">Slow-cooked overnight black lentils in butter gravy.</div><div class="dish-footer"><div class="dish-price">₹229</div><button class="add-btn" onclick="addToCart(this,'Dal Makhani')">+ Add</button></div></div></div>
+      <div class="dish-card"><div class="dish-img" style="background:linear-gradient(135deg,#2a1a0a,#1a0a0a)"><span style="position:relative;z-index:1">🥘</span><span class="badge" style="background:var(--red);color:#fff">HOT</span></div><div class="dish-body"><div class="dish-name">Veg Biryani Royale</div><div class="dish-desc">Fragrant basmati with seasonal vegetables & rose water.</div><div class="dish-footer"><div class="dish-price">₹279</div><button class="add-btn" onclick="addToCart(this,'Veg Biryani')">+ Add</button></div></div></div>
+    </div>
+    <div class="menu-cat" id="cat-nonveg">
+      <div class="dish-card"><div class="dish-img" style="background:linear-gradient(135deg,#2a0a0a,#1a0a0a)"><span style="position:relative;z-index:1">🍗</span><span class="badge" style="background:var(--gold);color:var(--navy)">BEST</span></div><div class="dish-body"><div class="dish-name">Boundary Biryani</div><div class="dish-desc">Hyderabadi mutton dum biryani with saffron.</div><div class="dish-footer"><div class="dish-price">₹349</div><button class="add-btn" onclick="addToCart(this,'Boundary Biryani')">+ Add</button></div></div></div>
+      <div class="dish-card"><div class="dish-img" style="background:linear-gradient(135deg,#1a0a1a,#2a0a1a)"><span style="position:relative;z-index:1">🍖</span></div><div class="dish-body"><div class="dish-name">Six-Spice Chicken</div><div class="dish-desc">Tandoori grilled in six signature spices.</div><div class="dish-footer"><div class="dish-price">₹289</div><button class="add-btn" onclick="addToCart(this,'Six-Spice Chicken')">+ Add</button></div></div></div>
+      <div class="dish-card"><div class="dish-img" style="background:linear-gradient(135deg,#0a1a2a,#1a0a2a)"><span style="position:relative;z-index:1">🦐</span></div><div class="dish-body"><div class="dish-name">Coastal Prawn Curry</div><div class="dish-desc">Tiger prawns in coconut & tamarind gravy.</div><div class="dish-footer"><div class="dish-price">₹419</div><button class="add-btn" onclick="addToCart(this,'Prawn Curry')">+ Add</button></div></div></div>
+    </div>
+    <div class="menu-cat" id="cat-starters">
+      <div class="dish-card"><div class="dish-img" style="background:linear-gradient(135deg,#2a2a0a,#1a1a0a)"><span style="position:relative;z-index:1">🧅</span></div><div class="dish-body"><div class="dish-name">Crispy Onion Bhaji</div><div class="dish-desc">Golden bhajis with tamarind chutney (8 pcs).</div><div class="dish-footer"><div class="dish-price">₹149</div><button class="add-btn" onclick="addToCart(this,'Onion Bhaji')">+ Add</button></div></div></div>
+      <div class="dish-card"><div class="dish-img" style="background:linear-gradient(135deg,#0a2a1a,#0a1a2a)"><span style="position:relative;z-index:1">🥙</span><span class="badge" style="background:var(--red);color:#fff">SPICY</span></div><div class="dish-body"><div class="dish-name">Masala Nachos</div><div class="dish-desc">Loaded nachos with tikka masala & cheese.</div><div class="dish-footer"><div class="dish-price">₹199</div><button class="add-btn" onclick="addToCart(this,'Masala Nachos')">+ Add</button></div></div></div>
+    </div>
+    <div class="menu-cat" id="cat-drinks">
+      <div class="dish-card"><div class="dish-img" style="background:linear-gradient(135deg,#0a1a2a,#0a2a1a)"><span style="position:relative;z-index:1">🥭</span><span class="badge" style="background:var(--gold);color:var(--navy)">SEASONAL</span></div><div class="dish-body"><div class="dish-name">Mango Lassi</div><div class="dish-desc">Thick Alphonso mango lassi, lightly sweetened.</div><div class="dish-footer"><div class="dish-price">₹99</div><button class="add-btn" onclick="addToCart(this,'Mango Lassi')">+ Add</button></div></div></div>
+      <div class="dish-card"><div class="dish-img" style="background:linear-gradient(135deg,#0a2a2a,#2a1a0a)"><span style="position:relative;z-index:1">🍋</span></div><div class="dish-body"><div class="dish-name">Nimbu Pani Special</div><div class="dish-desc">Black salt lemonade with mint & cumin.</div><div class="dish-footer"><div class="dish-price">₹69</div><button class="add-btn" onclick="addToCart(this,'Nimbu Pani')">+ Add</button></div></div></div>
+      <div class="dish-card"><div class="dish-img" style="background:linear-gradient(135deg,#1a0a1a,#0a1a0a)"><span style="position:relative;z-index:1">🧃</span></div><div class="dish-body"><div class="dish-name">IPL Mocktail</div><div class="dish-desc">Team-coloured mocktail of the day!</div><div class="dish-footer"><div class="dish-price">₹129</div><button class="add-btn" onclick="addToCart(this,'IPL Mocktail')">+ Add</button></div></div></div>
+    </div>
+    <div class="menu-cat" id="cat-combos">
+      <div class="dish-card" style="border-color:rgba(245,197,24,.3)"><div class="dish-img" style="background:linear-gradient(135deg,#2a1a0a,#0a2a0a)"><span style="position:relative;z-index:1">🎯</span><span class="badge" style="background:var(--gold);color:var(--navy)">BEST VALUE</span></div><div class="dish-body"><div class="dish-name">Century Combo</div><div class="dish-desc">Biryani + Starters + Dessert + Drink for 2.</div><div class="dish-footer"><div class="dish-price"><del style="color:var(--muted);font-size:.88rem">₹899</del> ₹699</div><button class="add-btn" onclick="addToCart(this,'Century Combo')">+ Add</button></div></div></div>
+      <div class="dish-card" style="border-color:rgba(245,197,24,.3)"><div class="dish-img" style="background:linear-gradient(135deg,#0a1a2a,#2a0a1a)"><span style="position:relative;z-index:1">🏟️</span><span class="badge" style="background:var(--red);color:#fff">GROUP</span></div><div class="dish-body"><div class="dish-name">Stadium Pack (4 pax)</div><div class="dish-desc">4 mains + 2 starters + 4 drinks.</div><div class="dish-footer"><div class="dish-price"><del style="color:var(--muted);font-size:.88rem">₹2400</del> ₹1799</div><button class="add-btn" onclick="addToCart(this,'Stadium Pack')">+ Add</button></div></div></div>
+    </div>
+  </section>
+</div>
+
+<!-- ============================================================
+     GAME ZONE
+     ============================================================ -->
+<div class="page" id="page-gamezone">
+  <div class="page-hero"><h1>🏆 IPL <span style="color:var(--gold)">Game Zone</span></h1><p>Predict. Earn points. Redeem for discounts up to 50% OFF!</p></div>
+  <section>
+    <div class="pts-display">
+      <div class="pts-info"><div class="lbl">Your Points</div><div class="val" id="userPoints">125</div></div>
+      <div class="pts-info"><div class="lbl">Predictions</div><div class="val" id="predCount">3</div></div>
+      <div class="pts-info"><div class="lbl">Coupons Won</div><div class="val">1</div></div>
+      <button class="btn-p" onclick="showPage('offers')">Redeem Points</button>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:14px;margin-bottom:36px">
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px;text-align:center"><div style="font-size:1.9rem;margin-bottom:6px">🎯</div><div style="font-family:'Rajdhani',sans-serif;font-weight:700;margin-bottom:3px">Predict</div><div style="font-size:.78rem;color:var(--muted)">Before match starts</div></div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px;text-align:center"><div style="font-size:1.9rem;margin-bottom:6px">⭐</div><div style="font-family:'Rajdhani',sans-serif;font-weight:700;margin-bottom:3px">Earn Points</div><div style="font-size:.78rem;color:var(--muted)">10–50 pts each</div></div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px;text-align:center"><div style="font-size:1.9rem;margin-bottom:6px">🎁</div><div style="font-family:'Rajdhani',sans-serif;font-weight:700;margin-bottom:3px">Redeem</div><div style="font-size:.78rem;color:var(--muted)">Points → coupons</div></div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px;text-align:center"><div style="font-size:1.9rem;margin-bottom:6px">🍽️</div><div style="font-family:'Rajdhani',sans-serif;font-weight:700;margin-bottom:3px">Feast!</div><div style="font-size:.78rem;color:var(--muted)">Use on next order</div></div>
+    </div>
+    <div style="background:var(--card);border:1px solid rgba(220,38,38,.38);border-radius:11px;padding:14px 18px;display:flex;align-items:center;gap:11px;margin-bottom:26px">
+      <div class="live-dot"></div>
+      <div><span style="font-family:'Rajdhani',sans-serif;font-weight:700" id="gz-match-label">TODAY: MI vs CSK</span> <span style="color:var(--muted);font-size:.82rem">· Predictions close at match start</span></div>
+    </div>
+    <h3 style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:1.15rem;margin-bottom:18px">Today's Predictions</h3>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:18px;margin-bottom:44px">
+      <div class="pred-card"><div class="pred-title">🪙 Toss Winner</div><div class="pred-desc">Which captain calls it correctly?</div><div class="pred-pts"><i class="fas fa-star"></i> +10 Points</div><div class="pred-opts"><div class="pred-opt" onclick="selectOption(this,'toss')"><div class="tlogo" style="background:#004C97">MI</div>Mumbai Indians</div><div class="pred-opt" onclick="selectOption(this,'toss')"><div class="tlogo" style="background:#fbbf24;color:#000">CSK</div>Chennai Super Kings</div></div><button class="sub-pred" onclick="submitPrediction(this,'toss',10)">Submit Prediction</button></div>
+      <div class="pred-card"><div class="pred-title">🏆 Match Winner</div><div class="pred-desc">Who lifts the trophy tonight?</div><div class="pred-pts"><i class="fas fa-star"></i> +25 Points</div><div class="pred-opts"><div class="pred-opt" onclick="selectOption(this,'match')"><div class="tlogo" style="background:#004C97">MI</div>Mumbai Indians</div><div class="pred-opt" onclick="selectOption(this,'match')"><div class="tlogo" style="background:#fbbf24;color:#000">CSK</div>Chennai Super Kings</div></div><button class="sub-pred" onclick="submitPrediction(this,'match',25)">Submit Prediction</button></div>
+      <div class="pred-card"><div class="pred-title">🏏 Highest Scorer</div><div class="pred-desc">Who dominates the bat today?</div><div class="pred-pts"><i class="fas fa-star"></i> +50 Points</div><div class="pred-opts"><div class="pred-opt" onclick="selectOption(this,'scorer')"><div class="tlogo" style="background:#004C97">MI</div>Rohit Sharma</div><div class="pred-opt" onclick="selectOption(this,'scorer')"><div class="tlogo" style="background:#004C97">MI</div>Suryakumar Yadav</div><div class="pred-opt" onclick="selectOption(this,'scorer')"><div class="tlogo" style="background:#fbbf24;color:#000">CSK</div>Ruturaj Gaikwad</div></div><button class="sub-pred" onclick="submitPrediction(this,'scorer',50)">Submit Prediction</button></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start">
+      <div>
+        <h3 style="font-family:'Black Han Sans',sans-serif;font-size:1.4rem;margin-bottom:18px">🏅 Top <span class="gold">Predictors</span></h3>
+        <div class="lb-row top3"><div class="rank-n r1">1</div><div><div style="font-family:'Rajdhani',sans-serif;font-weight:700">Arjun Kapoor</div><div style="font-size:.77rem;color:var(--muted)">🔵 MI Fan · 12 correct</div></div><div class="pts-badge">2450 pts</div></div>
+        <div class="lb-row top3"><div class="rank-n r2">2</div><div><div style="font-family:'Rajdhani',sans-serif;font-weight:700">Priya Sharma</div><div style="font-size:.77rem;color:var(--muted)">🟡 CSK Fan · 11 correct</div></div><div class="pts-badge">2200 pts</div></div>
+        <div class="lb-row top3"><div class="rank-n r3">3</div><div><div style="font-family:'Rajdhani',sans-serif;font-weight:700">Rahul Verma</div><div style="font-size:.77rem;color:var(--muted)">🔴 RCB Fan · 10 correct</div></div><div class="pts-badge">1980 pts</div></div>
+        <div class="lb-row"><div class="rank-n" style="color:var(--muted)">4</div><div><div style="font-family:'Rajdhani',sans-serif;font-weight:700">Neha Singh</div><div style="font-size:.77rem;color:var(--muted)">🟣 RR Fan</div></div><div class="pts-badge">1750 pts</div></div>
+        <div class="lb-row"><div class="rank-n" style="color:var(--muted)">5</div><div><div style="font-family:'Rajdhani',sans-serif;font-weight:700">You</div><div style="font-size:.77rem;color:var(--muted)">🏏 Delhi Fan</div></div><div class="pts-badge" id="lb-your-pts">125 pts</div></div>
+      </div>
+      <div>
+        <h3 style="font-family:'Black Han Sans',sans-serif;font-size:1.4rem;margin-bottom:18px">🎁 Points → <span class="gold">Rewards</span></h3>
+        <div style="display:flex;flex-direction:column;gap:11px">
+          <div style="background:var(--card);border:1px solid var(--border);border-radius:11px;padding:14px;display:flex;align-items:center;justify-content:space-between;gap:10px"><div><div style="font-family:'Rajdhani',sans-serif;font-weight:700">10% OFF Coupon</div><div style="font-size:.77rem;color:var(--muted)">Min ₹300</div></div><button class="add-btn" onclick="redeemPoints(100,'10%')">100 pts</button></div>
+          <div style="background:var(--card);border:1px solid var(--border);border-radius:11px;padding:14px;display:flex;align-items:center;justify-content:space-between;gap:10px"><div><div style="font-family:'Rajdhani',sans-serif;font-weight:700">20% OFF Coupon</div><div style="font-size:.77rem;color:var(--muted)">Min ₹500</div></div><button class="add-btn" onclick="redeemPoints(200,'20%')">200 pts</button></div>
+          <div style="background:var(--card);border:1px solid rgba(245,197,24,.28);border-radius:11px;padding:14px;display:flex;align-items:center;justify-content:space-between;gap:10px"><div><div style="font-family:'Rajdhani',sans-serif;font-weight:700;color:var(--gold)">50% OFF Coupon 🔥</div><div style="font-size:.77rem;color:var(--muted)">Min ₹999</div></div><button class="add-btn" onclick="redeemPoints(500,'50%')">500 pts</button></div>
+          <div style="background:var(--card);border:1px solid var(--border);border-radius:11px;padding:14px;display:flex;align-items:center;justify-content:space-between;gap:10px"><div><div style="font-family:'Rajdhani',sans-serif;font-weight:700">Free Starter</div><div style="font-size:.77rem;color:var(--muted)">Min ₹400</div></div><button class="add-btn" onclick="redeemPoints(150,'Free Starter')">150 pts</button></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- OFFERS PAGE (condensed) -->
+<div class="page" id="page-offers">
+  <div class="page-hero"><h1>🎁 Offers & <span style="color:var(--gold)">Rewards</span></h1><p>Exclusive deals for every fan.</p></div>
+  <section>
+    <div class="sec-label">If Your Team Wins</div>
+    <h2 class="sec-title">Match-Day <span class="gold">Offers</span></h2>
+    <div style="display:flex;flex-direction:column;gap:14px;margin-bottom:44px">
+      <div class="match-offer"><div style="font-family:'Black Han Sans',sans-serif;font-size:1.4rem;color:var(--gold)">MI <span style="color:var(--muted);font-size:.8rem">vs</span> CSK</div><div style="flex:1"><div style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:1rem">If <span style="color:#004C97">MI</span> wins → 15% OFF</div><div style="font-size:.8rem;color:var(--muted)">48 hrs · Min ₹400 · Code: MIWIN15</div></div><button class="add-btn" onclick="copyCode('MIWIN15')">Copy</button></div>
+      <div class="match-offer"><div style="font-family:'Black Han Sans',sans-serif;font-size:1.4rem;color:var(--gold)">MI <span style="color:var(--muted);font-size:.8rem">vs</span> CSK</div><div style="flex:1"><div style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:1rem">If <span style="color:#fbbf24">CSK</span> wins → 20% OFF</div><div style="font-size:.8rem;color:var(--muted)">48 hrs · Min ₹400 · Code: CSKWIN20</div></div><button class="add-btn" onclick="copyCode('CSKWIN20')">Copy</button></div>
+    </div>
+    <div class="sec-label">Active Coupons</div>
+    <h2 class="sec-title">Your <span class="gold">Coupons</span></h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:18px;margin-bottom:44px">
+      <div class="coupon-card"><div class="coupon-pct">10%</div><div style="font-family:'Rajdhani',sans-serif;font-weight:700;margin:4px 0 2px">New User Welcome</div><div class="coupon-code" onclick="copyCode('NEWBOUNDARY10')">NEWBOUNDARY10</div><div class="coupon-terms">First order · Min ₹299 · Valid till 30 Apr</div></div>
+      <div class="coupon-card" style="border-color:rgba(245,197,24,.5)"><div class="coupon-pct">25%</div><div style="font-family:'Rajdhani',sans-serif;font-weight:700;margin:4px 0 2px">Weekend Special</div><div class="coupon-code" onclick="copyCode('WEEKEND25')">WEEKEND25</div><div class="coupon-terms">Sat–Sun · Min ₹599 · Dine-in only</div></div>
+      <div class="coupon-card"><div class="coupon-pct">15%</div><div style="font-family:'Rajdhani',sans-serif;font-weight:700;margin:4px 0 2px">Refer a Friend</div><div class="coupon-code" onclick="copyCode('REFER15')">REFER15</div><div class="coupon-terms">Share link. Both get 15% OFF!</div></div>
+      <div class="coupon-card"><div class="coupon-pct">50%</div><div style="font-family:'Rajdhani',sans-serif;font-weight:700;margin:4px 0 2px">🏆 Top Predictor</div><div class="coupon-code" onclick="copyCode('CHAMP50')">CHAMP50</div><div class="coupon-terms">Leaderboard winners · Min ₹999</div></div>
+    </div>
+  </section>
+</div>
+
+<!-- CONTACT PAGE (condensed) -->
+<div class="page" id="page-contact">
+  <div class="page-hero"><h1>📅 Book Your <span style="color:var(--gold)">Table</span></h1><p>Reserve near the big screens. Walk-ins welcome!</p></div>
+  <section>
+    <div class="contact-grid">
+      <div>
+        <h3 style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:1.2rem;margin-bottom:18px">Table Reservation</h3>
+        <div class="form-grp"><label class="form-lbl">Full Name</label><input type="text" class="form-inp" placeholder="Your name" id="bookName"></div>
+        <div class="form-grp"><label class="form-lbl">Phone</label><input type="tel" class="form-inp" placeholder="+91 98765 43210" id="bookPhone"></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:11px">
+          <div class="form-grp"><label class="form-lbl">Date</label><input type="date" class="form-inp" id="bookDate"></div>
+          <div class="form-grp"><label class="form-lbl">Time</label><select class="form-sel" id="bookTime"><option>12:00 PM</option><option>1:00 PM</option><option>7:00 PM</option><option>8:00 PM</option><option>9:00 PM</option><option>10:00 PM</option></select></div>
+        </div>
+        <div class="form-grp"><label class="form-lbl">Guests</label><select class="form-sel"><option>1-2</option><option>3-4</option><option>5-8</option><option>9+</option></select></div>
+        <div class="form-grp"><label class="form-lbl">Special Requests</label><textarea class="form-ta" placeholder="Match seating, dietary needs, celebration..."></textarea></div>
+        <button class="btn-p" style="width:100%;justify-content:center;padding:14px" onclick="submitBooking()"><i class="fas fa-calendar-check"></i> Confirm Reservation</button>
+        <p style="text-align:center;font-size:.79rem;color:var(--muted);margin-top:10px">Or call: <strong style="color:var(--gold)">+91 98765 43210</strong></p>
+      </div>
+      <div>
+        <div class="info-card" style="margin-bottom:18px">
+          <h3 style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:1.15rem;margin-bottom:18px">Restaurant Info</h3>
+          <div class="info-row"><div class="info-ico"><i class="fas fa-map-marker-alt"></i></div><div><div style="font-size:.78rem;color:var(--muted)">Address</div><div style="font-family:'Rajdhani',sans-serif;font-weight:600">42 Cricket Lane, Connaught Place, Delhi – 110001</div></div></div>
+          <div class="info-row"><div class="info-ico"><i class="fas fa-clock"></i></div><div><div style="font-size:.78rem;color:var(--muted)">Hours</div><div style="font-family:'Rajdhani',sans-serif;font-weight:600">Mon–Fri: 12PM–11PM · Sat–Sun: 11AM–12AM</div></div></div>
+          <div class="info-row"><div class="info-ico"><i class="fas fa-phone"></i></div><div><div style="font-size:.78rem;color:var(--muted)">Phone</div><div style="font-family:'Rajdhani',sans-serif;font-weight:600">+91 98765 43210</div></div></div>
+          <div class="divider"></div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <a href="https://wa.me/919876543210?text=Hi%2C+I+want+to+book+a+table+at+The+Boundary!" target="_blank" style="flex:1;display:flex;align-items:center;justify-content:center;gap:7px;padding:11px;background:rgba(37,211,102,.1);border:1px solid rgba(37,211,102,.28);border-radius:9px;color:#25D366;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:.88rem;text-decoration:none"><i class="fab fa-whatsapp" style="font-size:1.1rem"></i> WhatsApp</a>
+            <a href="tel:+919876543210" style="flex:1;display:flex;align-items:center;justify-content:center;gap:7px;padding:11px;background:rgba(245,197,24,.1);border:1px solid rgba(245,197,24,.28);border-radius:9px;color:var(--gold);font-family:'Rajdhani',sans-serif;font-weight:700;font-size:.88rem;text-decoration:none"><i class="fas fa-phone"></i> Call Now</a>
+          </div>
+        </div>
+        <div class="map-box">
+          <i class="fas fa-map-marked-alt" style="font-size:2.8rem;color:var(--gold)"></i>
+          <div style="font-family:'Rajdhani',sans-serif;font-weight:700">42 Cricket Lane, Connaught Place</div>
+          <div style="font-size:.83rem">New Delhi, 110001</div>
+          <a href="https://maps.google.com/?q=Connaught+Place+New+Delhi" target="_blank" style="padding:9px 22px;background:rgba(245,197,24,.13);border:1px solid rgba(245,197,24,.28);border-radius:8px;color:var(--gold);font-family:'Rajdhani',sans-serif;font-weight:700;font-size:.88rem;text-decoration:none;margin-top:6px"><i class="fas fa-external-link-alt"></i> Open Maps</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-logo">🏏 The Boundary</div>
+  <div class="foot-tag">Delhi's Home of Cricket Dining · IPL Season 2026</div>
+  <div class="foot-links">
+    <span class="foot-link" onclick="showPage('home')">Home</span>
+    <span class="foot-link" onclick="showPage('menu')">Menu</span>
+    <span class="foot-link" onclick="showPage('gamezone')">Game Zone</span>
+    <span class="foot-link" onclick="showPage('offers')">Offers</span>
+    <span class="foot-link" onclick="showPage('contact')">Contact</span>
+  </div>
+  <div class="foot-copy">© 2025 The Boundary Restaurant, New Delhi. All rights reserved.</div>
+</footer>
+
+<!-- WhatsApp -->
+<a href="https://wa.me/917290068096?text=Hi%21+I+found+you+on+The+Boundary+IPL+2026+%F0%9F%8F%8F+I%27d+love+to+book+a+table+%2F+know+more+about+offers!" target="_blank" class="wa-float"><i class="fab fa-whatsapp"></i></a>
+
+<!-- Toast -->
+<div class="toast" id="toast">Message</div>
+
+<!-- ============================================================
+     SUB-ADMIN OVERLAY
+     ============================================================ -->
+<div id="admin-overlay">
+  <div class="admin-wrap">
+
+    <!-- Admin Header (shown after login) -->
+    <div class="admin-header" id="admin-header" style="display:none">
+      <div class="admin-logo">
+        ⚙️ Sub-Admin Panel
+        <span>The Boundary Restaurant — Content Manager</span>
+      </div>
+      <button class="close-admin" onclick="closeAdmin()">✕ Exit Panel</button>
+    </div>
+
+    <!-- LOGIN FORM -->
+    <div id="admin-login">
+      <h2>🔐 Sub-Admin <span style="color:var(--gold)">Login</span></h2>
+      <p>Enter your credentials to access the content management panel.</p>
+      <div class="af-grp"><label class="af-lbl">Username</label><input type="text" class="af-inp" id="adminUser" placeholder="subadmin" value="subadmin"></div>
+      <div class="af-grp"><label class="af-lbl">Password</label><input type="password" class="af-inp" id="adminPass" placeholder="Enter password" onkeydown="if(event.key==='Enter')doLogin()"></div>
+      <button class="save-btn" onclick="doLogin()" style="width:100%;justify-content:center;margin-top:8px"><i class="fas fa-sign-in-alt"></i> Login to Panel</button>
+      <div style="margin-top:14px;padding:12px;background:rgba(245,197,24,.07);border-radius:8px;font-size:.82rem;color:var(--muted)">
+        Demo credentials: <strong style="color:var(--gold)">subadmin / boundary2025</strong>
+      </div>
+      <button onclick="closeAdmin()" style="width:100%;margin-top:10px;background:transparent;border:1px solid var(--border);color:var(--muted);padding:10px;border-radius:8px;cursor:pointer;font-family:'Exo 2',sans-serif">← Back to Website</button>
+    </div>
+
+    <!-- ADMIN PANEL (post-login) -->
+    <div id="admin-panel">
+
+      <!-- Tab Navigation -->
+      <div class="admin-tabs">
+        <button class="atab active" onclick="switchAdminTab(this,'today')">🔴 Today's Match</button>
+        <button class="atab" onclick="switchAdminTab(this,'upcoming')">📅 Upcoming Matches</button>
+        <button class="atab" onclick="switchAdminTab(this,'banner')">🖼️ Hero Banner</button>
+        <button class="atab" onclick="switchAdminTab(this,'announce')">📢 Announcements</button>
+        <button class="atab" onclick="switchAdminTab(this,'offers')">🎁 Offers Text</button>
+      </div>
+
+      <!-- ---- TODAY'S MATCH ---- -->
+      <div class="apanel active" id="ap-today">
+        <div class="admin-card">
+          <h3><span style="color:var(--red)">🔴</span> Live Match Details</h3>
+          <div class="af-grid">
+            <div class="af-grp"><label class="af-lbl">Team 1 (Home)</label><input class="af-inp" id="t1name" placeholder="e.g. Mumbai Indians" value="Mumbai Indians"></div>
+            <div class="af-grp"><label class="af-lbl">Team 1 Short</label><input class="af-inp" id="t1short" placeholder="e.g. MI" value="MI" maxlength="4"></div>
+          </div>
+          <div class="af-grid">
+            <div class="af-grp"><label class="af-lbl">Team 2 (Away)</label><input class="af-inp" id="t2name" placeholder="e.g. Chennai Super Kings" value="Chennai Super Kings"></div>
+            <div class="af-grp"><label class="af-lbl">Team 2 Short</label><input class="af-inp" id="t2short" placeholder="e.g. CSK" value="CSK" maxlength="4"></div>
+          </div>
+          <div class="af-grid">
+            <div class="af-grp"><label class="af-lbl">Current Score (T1)</label><input class="af-inp" id="score1" placeholder="e.g. 124/3" value="124/3"></div>
+            <div class="af-grp"><label class="af-lbl">Over</label><input class="af-inp" id="score1ov" placeholder="e.g. 14.2" value="14.2"></div>
+          </div>
+          <div class="af-grid">
+            <div class="af-grp"><label class="af-lbl">Venue</label><input class="af-inp" id="matchVenue" placeholder="Stadium name" value="Wankhede Stadium, Mumbai"></div>
+            <div class="af-grp"><label class="af-lbl">Match Status</label>
+              <select class="af-sel" id="matchStatus">
+                <option value="live">🔴 Live Now</option>
+                <option value="upcoming">🟡 Upcoming Today</option>
+                <option value="completed">✅ Completed</option>
+              </select>
+            </div>
+          </div>
+          <div class="af-grp"><label class="af-lbl">Ticker Message (shown in hero)</label><input class="af-inp" id="tickerMsg" value="🔴 LIVE: MI vs CSK, 14th Over — MI 124/3 | Order now = 3× Points!"></div>
+          <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:4px">
+            <button class="save-btn" onclick="saveTodayMatch()"><i class="fas fa-save"></i> Save & Publish Live</button>
+          </div>
+        </div>
+        <!-- Preview -->
+        <div class="admin-card">
+          <h3>👁️ Live Preview</h3>
+          <div class="match-preview" id="today-preview">
+            <div style="text-align:center"><div style="font-family:'Black Han Sans',sans-serif;font-size:1.6rem;color:var(--gold)" id="prev-t1short">MI</div><div style="font-size:.78rem;color:var(--muted)" id="prev-t1name">Mumbai Indians</div><div style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:1.2rem;margin-top:4px" id="prev-score1">124/3 · 14.2ov</div></div>
+            <div style="font-family:'Rajdhani',sans-serif;font-weight:700;color:var(--muted)">VS</div>
+            <div style="text-align:center"><div style="font-family:'Black Han Sans',sans-serif;font-size:1.6rem;color:var(--amber)" id="prev-t2short">CSK</div><div style="font-size:.78rem;color:var(--muted)" id="prev-t2name">Chennai Super Kings</div><div style="font-size:.78rem;color:var(--muted);margin-top:4px">Yet to bat</div></div>
+            <div style="font-family:'Rajdhani',sans-serif;font-size:.82rem;color:var(--muted);flex-basis:100%;text-align:center" id="prev-venue">📍 Wankhede Stadium, Mumbai</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ---- UPCOMING MATCHES ---- -->
+      <div class="apanel" id="ap-upcoming">
+        <div class="admin-card">
+          <h3>➕ Add Upcoming Match</h3>
+          <div class="af-grid">
+            <div class="af-grp"><label class="af-lbl">Team 1</label><input class="af-inp" id="um-t1" placeholder="e.g. RCB"></div>
+            <div class="af-grp"><label class="af-lbl">Team 2</label><input class="af-inp" id="um-t2" placeholder="e.g. KKR"></div>
+          </div>
+          <div class="af-grid">
+            <div class="af-grp"><label class="af-lbl">Date</label><input type="date" class="af-inp" id="um-date"></div>
+            <div class="af-grp"><label class="af-lbl">Time</label><input type="time" class="af-inp" id="um-time" value="19:30"></div>
+          </div>
+          <div class="af-grp"><label class="af-lbl">Venue</label><input class="af-inp" id="um-venue" placeholder="Stadium name"></div>
+          <div class="af-grp"><label class="af-lbl">Special Offer for this match</label><input class="af-inp" id="um-offer" placeholder="e.g. Free Nachos if RCB wins!"></div>
+          <button class="save-btn" onclick="addUpcomingMatch()"><i class="fas fa-plus"></i> Add Match</button>
+        </div>
+        <div class="admin-card">
+          <h3>📋 Upcoming Match List <span style="font-size:.8rem;color:var(--muted);font-family:'Exo 2',sans-serif;font-weight:400">(click × to remove)</span></h3>
+          <div id="um-list"></div>
+        </div>
+      </div>
+
+      <!-- ---- HERO BANNER ---- -->
+      <div class="apanel" id="ap-banner">
+        <div class="admin-card">
+          <h3>🖼️ Hero Background Image</h3>
+          <p style="font-size:.85rem;color:var(--muted);margin-bottom:18px">Upload an image to overlay on the cricket stadium background. A semi-transparent blend will be applied automatically.</p>
+          <div class="af-grp"><label class="af-lbl">Banner Image URL</label><input class="af-inp" id="banner-url" placeholder="https://example.com/image.jpg"><button class="save-btn" onclick="applyBannerUrl()" style="margin-top:8px"><i class="fas fa-link"></i> Apply URL</button></div>
+          <div style="height:1px;background:var(--border);margin:18px 0"></div>
+          <div class="af-grp"><label class="af-lbl">Or Upload Image File</label>
+            <div class="upload-box" onclick="document.getElementById('banner-file').click()">
+              <input type="file" id="banner-file" accept="image/*" onchange="uploadBanner(this)">
+              <i class="fas fa-cloud-upload-alt" style="font-size:2rem;color:var(--gold);margin-bottom:8px"></i>
+              <div style="font-family:'Rajdhani',sans-serif;font-weight:700">Click to Upload</div>
+              <div style="font-size:.8rem;color:var(--muted);margin-top:4px">JPG, PNG, WebP · Max 5MB · Recommended: 1400×700px</div>
+              <img id="banner-preview" class="upload-preview" alt="Banner preview">
+            </div>
+          </div>
+          <button class="danger-btn" onclick="clearBanner()" style="margin-top:4px">🗑️ Remove Banner / Reset to Stadium</button>
+        </div>
+        <div class="admin-card">
+          <h3>✏️ Hero Text Editor</h3>
+          <div class="af-grp"><label class="af-lbl">Eyebrow Text (small top label)</label><input class="af-inp" id="ht-eyebrow" value="🏟️ IPL Season 2025 — Delhi's Premier Cricket Dining"></div>
+          <div class="af-grp"><label class="af-lbl">Main Headline (gold gradient line)</label><input class="af-inp" id="ht-main" value="FOOD. GLORY."></div>
+          <div class="af-grp"><label class="af-lbl">Sub-Headline (small line below)</label><input class="af-inp" id="ht-sub" value="THE BOUNDARY"></div>
+          <div class="af-grp"><label class="af-lbl">Description Paragraph</label><textarea class="af-ta" id="ht-para">Delhi's ultimate match-day dining experience. Watch live IPL, predict winners, earn points, and unlock exclusive offers.</textarea></div>
+          <button class="save-btn" onclick="saveHeroText()"><i class="fas fa-save"></i> Update Hero Text</button>
+        </div>
+      </div>
+
+      <!-- ---- ANNOUNCEMENTS ---- -->
+      <div class="apanel" id="ap-announce">
+        <div class="admin-card">
+          <h3>📢 Add Announcement / Daily News</h3>
+          <div class="af-grp"><label class="af-lbl">Announcement Type</label>
+            <select class="af-sel" id="ann-type">
+              <option value="bar">🔴 Top Banner Bar (site-wide)</option>
+              <option value="offer">🎁 Today's Special Offer</option>
+              <option value="event">🏟️ Event/Match Notice</option>
+            </select>
+          </div>
+          <div class="af-grp"><label class="af-lbl">Message Text</label><textarea class="af-ta" id="ann-text" placeholder="Enter announcement text... e.g. 🔥 TONIGHT: MI vs RCB at 7:30 PM — Book your table now!"></textarea></div>
+          <div class="af-grp"><label class="af-lbl">Expires On (optional)</label><input type="date" class="af-inp" id="ann-expiry"></div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <button class="save-btn" onclick="addAnnouncement()"><i class="fas fa-bullhorn"></i> Publish Announcement</button>
+          </div>
+        </div>
+        <div class="admin-card">
+          <h3>📋 Active Announcements</h3>
+          <div id="ann-list">
+            <div class="ann-item">
+              <div class="ann-text"><span style="background:rgba(220,38,38,.15);color:var(--red);padding:2px 8px;border-radius:4px;font-size:.75rem;font-family:'Rajdhani',sans-serif;font-weight:700;margin-right:8px">BAR</span>🔥 MATCH DAY: MI vs CSK Tonight! Order during match = 3× Points!</div>
+              <button class="ann-del" onclick="this.closest('.ann-item').remove()">✕</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ---- OFFERS TEXT ---- -->
+      <div class="apanel" id="ap-offers">
+        <div class="admin-card">
+          <h3>🎁 Match-Based Offer Editor</h3>
+          <p style="font-size:.85rem;color:var(--muted);margin-bottom:18px">Edit the conditional offers displayed on the Offers page and in the announcement bar.</p>
+          <div id="offer-list">
+            <div style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:12px">
+              <div class="af-grid">
+                <div class="af-grp"><label class="af-lbl">Condition</label><input class="af-inp" value="If MI wins tonight"></div>
+                <div class="af-grp"><label class="af-lbl">Discount</label><input class="af-inp" value="15% OFF"></div>
+              </div>
+              <div class="af-grid">
+                <div class="af-grp"><label class="af-lbl">Coupon Code</label><input class="af-inp" value="MIWIN15"></div>
+                <div class="af-grp"><label class="af-lbl">Min Order</label><input class="af-inp" value="₹400"></div>
+              </div>
+              <div class="af-grp"><label class="af-lbl">Validity</label><input class="af-inp" value="48 hours after match"></div>
+            </div>
+            <div style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:12px">
+              <div class="af-grid">
+                <div class="af-grp"><label class="af-lbl">Condition</label><input class="af-inp" value="If CSK wins tonight"></div>
+                <div class="af-grp"><label class="af-lbl">Discount</label><input class="af-inp" value="20% OFF"></div>
+              </div>
+              <div class="af-grid">
+                <div class="af-grp"><label class="af-lbl">Coupon Code</label><input class="af-inp" value="CSKWIN20"></div>
+                <div class="af-grp"><label class="af-lbl">Min Order</label><input class="af-inp" value="₹400"></div>
+              </div>
+              <div class="af-grp"><label class="af-lbl">Validity</label><input class="af-inp" value="48 hours after match"></div>
+            </div>
+          </div>
+          <button class="save-btn" onclick="showToast('✅ Offers saved & published!')"><i class="fas fa-save"></i> Save All Offers</button>
+        </div>
+        <div class="admin-card">
+          <h3>➕ Add New Offer</h3>
+          <div class="af-grid">
+            <div class="af-grp"><label class="af-lbl">Condition</label><input class="af-inp" id="no-cond" placeholder="e.g. If RCB wins"></div>
+            <div class="af-grp"><label class="af-lbl">Discount</label><input class="af-inp" id="no-disc" placeholder="e.g. 30% OFF"></div>
+          </div>
+          <div class="af-grid">
+            <div class="af-grp"><label class="af-lbl">Coupon Code</label><input class="af-inp" id="no-code" placeholder="e.g. RCBWIN30"></div>
+            <div class="af-grp"><label class="af-lbl">Min Order</label><input class="af-inp" id="no-min" placeholder="e.g. ₹500"></div>
+          </div>
+          <button class="save-btn" onclick="addNewOffer()"><i class="fas fa-plus"></i> Add Offer</button>
+        </div>
+      </div>
+
+    </div><!-- /admin-panel -->
+  </div><!-- /admin-wrap -->
+</div><!-- /admin-overlay -->
+
+<script>
+// ===== STATE =====
+let cartCount = 0;
+let userPoints = 125;
+let upcomingMatches = [
+  { t1:'MI', t2:'CSK', date:'2025-04-02', time:'19:30', venue:'Wankhede Stadium', offer:'3× Points during match!' },
+  { t1:'RCB', t2:'KKR', date:'2025-04-04', time:'15:30', venue:'Chinnaswamy Stadium', offer:'Free Nachos if RCB wins!' },
+  { t1:'RR', t2:'DC', date:'2025-04-06', time:'19:30', venue:'Sawai Mansingh Stadium', offer:'20% OFF on IPL combos' },
+];
+const predictionState = {};
+
+// ===== NAV =====
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-link').forEach(l=>l.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  const map={home:0,menu:1,gamezone:2,offers:3,contact:4};
+  if(map[id]!==undefined) document.querySelectorAll('.nav-link')[map[id]].classList.add('active');
+  window.scrollTo(0,0);
+}
+function toggleMenu(){document.getElementById('mobileMenu').classList.toggle('open')}
+
+// ===== MENU =====
+function switchMenu(tab,cat){
+  document.querySelectorAll('.menu-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.menu-cat').forEach(c=>c.classList.remove('active'));
+  tab.classList.add('active');
+  document.getElementById('cat-'+cat).classList.add('active');
+}
+
+// ===== TOAST =====
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2800);
+}
+
+// ===== CART =====
+function addToCart(btn,name){
+  cartCount++;
+  document.getElementById('cartCount').textContent=cartCount;
+  const orig=btn.textContent;
+  btn.textContent='✓ Added'; btn.style.background='var(--green)'; btn.style.color='#fff'; btn.style.borderColor='var(--green)';
+  setTimeout(()=>{btn.textContent=orig; btn.style.background=''; btn.style.color=''; btn.style.borderColor='';},1600);
+  showToast('🛒 '+name+' added to cart!');
+}
+
+// ===== PREDICTIONS =====
+function selectOption(el,group){
+  el.closest('.pred-card').querySelectorAll('.pred-opt').forEach(o=>o.classList.remove('selected'));
+  el.classList.add('selected'); predictionState[group]=el.textContent.trim();
+}
+function submitPrediction(btn,group,pts){
+  const card=btn.closest('.pred-card');
+  if(!card.querySelector('.pred-opt.selected')){showToast('⚠️ Select an option first!');return;}
+  userPoints+=pts;
+  document.getElementById('userPoints').textContent=userPoints;
+  document.getElementById('lb-your-pts').textContent=userPoints+' pts';
+  document.getElementById('predCount').textContent=parseInt(document.getElementById('predCount').textContent)+1;
+  card.querySelectorAll('.pred-opt').forEach(o=>{o.style.pointerEvents='none';o.style.opacity='.4';});
+  const sel=card.querySelector('.pred-opt.selected');
+  sel.style.opacity='1'; sel.style.background='rgba(22,163,74,.14)'; sel.style.borderColor='var(--green)'; sel.style.color='var(--green)';
+  btn.textContent='✓ Locked! +'+pts+' pts'; btn.style.background='var(--green)'; btn.disabled=true;
+  confetti(); showToast('🎯 Prediction locked! +'+pts+' points earned!');
+}
+function redeemPoints(cost,reward){
+  if(userPoints<cost){showToast('❌ Need '+cost+' pts. You have '+userPoints);return;}
+  userPoints-=cost;
+  document.getElementById('userPoints').textContent=userPoints;
+  confetti(); showToast('🎁 '+reward+' coupon unlocked!');
+}
+
+// ===== COPY =====
+function copyCode(code){
+  if(navigator.clipboard) navigator.clipboard.writeText(code).then(()=>showToast('📋 Copied: '+code));
+  else showToast('📋 Code: '+code);
+}
+
+// ===== BOOKING =====
+function submitBooking(){
+  const n=document.getElementById('bookName').value.trim();
+  const p=document.getElementById('bookPhone').value.trim();
+  if(!n||!p){showToast('⚠️ Fill in name and phone.');return;}
+  confetti(); showToast('🎉 Table booked for '+n+'!');
+  setTimeout(()=>showToast('📱 Confirmation SMS sent!'),3200);
+}
+
+// ===== CONFETTI =====
+function confetti(){
+  const colors=['#f5c518','#ea580c','#1d4ed8','#dc2626','#16a34a','#f59e0b'];
+  for(let i=0;i<28;i++){
+    const p=document.createElement('div'); p.className='cpiece';
+    p.style.left=Math.random()*100+'vw';
+    p.style.background=colors[~~(Math.random()*colors.length)];
+    p.style.animationDelay=Math.random()*0.5+'s';
+    p.style.width=(Math.random()*8+4)+'px'; p.style.height=(Math.random()*8+4)+'px';
+    p.style.borderRadius=Math.random()>.5?'50%':'2px';
+    document.body.appendChild(p); setTimeout(()=>p.remove(),3000);
+  }
+}
+
+// ===== SCROLL REVEAL =====
+function revealOnScroll(){document.querySelectorAll('.reveal').forEach(el=>{if(el.getBoundingClientRect().top<window.innerHeight-60)el.classList.add('visible');})}
+window.addEventListener('scroll',revealOnScroll); setTimeout(revealOnScroll,400);
+
+// ===== DEFAULT DATE =====
+const td=new Date().toISOString().split('T')[0];
+const di=document.getElementById('bookDate'); if(di){di.min=td;di.value=td;}
+
+// ===== UPCOMING MATCHES RENDER =====
+function renderUpcoming(){
+  const el=document.getElementById('upcoming-matches-display');
+  if(!el)return;
+  const today=new Date().toISOString().split('T')[0];
+  el.innerHTML=upcomingMatches.map((m,i)=>`
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:13px;padding:16px 20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;transition:all .25s" onmouseover="this.style.borderColor='rgba(245,197,24,.35)'" onmouseout="this.style.borderColor='var(--border)'">
+      <div style="display:flex;align-items:center;gap:6px;flex:1;min-width:160px">
+        <span style="font-family:'Black Han Sans',sans-serif;font-size:1.3rem;color:var(--gold)">${m.t1}</span>
+        <span style="font-family:'Rajdhani',sans-serif;font-weight:700;color:var(--muted);font-size:.88rem">vs</span>
+        <span style="font-family:'Black Han Sans',sans-serif;font-size:1.3rem;color:var(--amber)">${m.t2}</span>
+      </div>
+      <div style="font-size:.82rem;color:var(--muted);font-family:'Rajdhani',sans-serif">${m.date===today?'<span style="color:var(--red);font-weight:700">TODAY</span>':m.date} · ${m.time} · ${m.venue}</div>
+      ${m.offer?`<div style="background:rgba(245,197,24,.09);border:1px solid rgba(245,197,24,.2);padding:5px 12px;border-radius:7px;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:.82rem;color:var(--gold)">🎁 ${m.offer}</div>`:''}
+      <button class="btn-p" style="padding:9px 18px;font-size:.88rem" onclick="showPage('contact')">Book Table</button>
+    </div>
+  `).join('');
+}
+renderUpcoming();
+
+// ===== ADMIN - Hidden backend, accessible only via URL hash =====
+// Access via: yoursite.com/index.html#boundaryadmin2026
+function openAdmin(){document.getElementById('admin-overlay').classList.add('open');document.body.style.overflow='hidden';}
+function closeAdmin(){
+  document.getElementById('admin-overlay').classList.remove('open');
+  document.body.style.overflow='';
+  // Clear hash without reload
+  history.replaceState(null, '', window.location.pathname);
+}
+// Secret URL trigger — visit #boundaryadmin2026 to open panel
+function checkAdminHash(){
+  if(window.location.hash === '#boundaryadmin2026') openAdmin();
+}
+window.addEventListener('hashchange', checkAdminHash);
+window.addEventListener('load', checkAdminHash);
+function doLogin(){
+  const u=document.getElementById('adminUser').value.trim();
+  const p=document.getElementById('adminPass').value.trim();
+  if(u==='subadmin'&&p==='boundary2025'){
+    document.getElementById('admin-login').style.display='none';
+    document.getElementById('admin-panel').classList.add('open');
+    document.getElementById('admin-header').style.display='flex';
+    renderUMList();
+    showToast('✅ Welcome, Sub-Admin!');
+  } else {
+    showToast('❌ Invalid credentials. Try: subadmin / boundary2025');
+  }
+}
+
+// Admin tabs
+function switchAdminTab(tab,id){
+  document.querySelectorAll('.atab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.apanel').forEach(p=>p.classList.remove('active'));
+  tab.classList.add('active');
+  document.getElementById('ap-'+id).classList.add('active');
+}
+
+// ----- TODAY'S MATCH -----
+function saveTodayMatch(){
+  const t1s=document.getElementById('t1short').value;
+  const t2s=document.getElementById('t2short').value;
+  const t1n=document.getElementById('t1name').value;
+  const t2n=document.getElementById('t2name').value;
+  const sc=document.getElementById('score1').value;
+  const ov=document.getElementById('score1ov').value;
+  const venue=document.getElementById('matchVenue').value;
+  const ticker=document.getElementById('tickerMsg').value;
+  // Update preview
+  document.getElementById('prev-t1short').textContent=t1s;
+  document.getElementById('prev-t2short').textContent=t2s;
+  document.getElementById('prev-t1name').textContent=t1n;
+  document.getElementById('prev-t2name').textContent=t2n;
+  document.getElementById('prev-score1').textContent=sc+' · '+ov+'ov';
+  document.getElementById('prev-venue').textContent='📍 '+venue;
+  // Update live site
+  document.getElementById('ticker-match').textContent=t1s+' vs '+t2s;
+  document.getElementById('ticker-score').textContent=t1s+' '+sc+' ('+ov+' ov)';
+  document.getElementById('live-ticker-text').innerHTML=ticker;
+  document.getElementById('gz-match-label').textContent='TODAY: '+t1s+' vs '+t2s;
+  confetti(); showToast('✅ Live match updated on site!');
+}
+
+// ----- UPCOMING MATCHES -----
+function addUpcomingMatch(){
+  const t1=document.getElementById('um-t1').value.trim();
+  const t2=document.getElementById('um-t2').value.trim();
+  const date=document.getElementById('um-date').value;
+  const time=document.getElementById('um-time').value;
+  const venue=document.getElementById('um-venue').value.trim();
+  const offer=document.getElementById('um-offer').value.trim();
+  if(!t1||!t2||!date){showToast('⚠️ Fill Team 1, Team 2, and Date.');return;}
+  upcomingMatches.push({t1,t2,date,time,venue,offer});
+  renderUMList(); renderUpcoming();
+  document.getElementById('um-t1').value='';
+  document.getElementById('um-t2').value='';
+  document.getElementById('um-venue').value='';
+  document.getElementById('um-offer').value='';
+  confetti(); showToast('✅ Match added to upcoming list!');
+}
+function renderUMList(){
+  const el=document.getElementById('um-list');
+  el.innerHTML=upcomingMatches.map((m,i)=>`
+    <div class="um-row">
+      <div class="teams">${m.t1} vs ${m.t2}</div>
+      <div class="meta">${m.date} · ${m.time}</div>
+      <div class="meta" style="flex:1">${m.venue}</div>
+      ${m.offer?`<div style="font-size:.78rem;color:var(--gold)">🎁 ${m.offer}</div>`:''}
+      <button class="ann-del" onclick="removeMatch(${i})">✕</button>
+    </div>
+  `).join('');
+}
+function removeMatch(i){upcomingMatches.splice(i,1);renderUMList();renderUpcoming();showToast('🗑️ Match removed.');}
+
+// ----- BANNER -----
+function applyBannerUrl(){
+  const url=document.getElementById('banner-url').value.trim();
+  if(!url){showToast('⚠️ Enter an image URL.');return;}
+  const img=document.getElementById('hero-custom-banner');
+  img.src=url; img.classList.add('visible'); img.onerror=()=>{img.classList.remove('visible');showToast('❌ Image URL failed to load.');};
+  showToast('✅ Banner applied to hero!');
+}
+function uploadBanner(input){
+  const file=input.files[0]; if(!file)return;
+  const reader=new FileReader();
+  reader.onload=e=>{
+    const preview=document.getElementById('banner-preview');
+    preview.src=e.target.result; preview.style.display='block';
+    const hero=document.getElementById('hero-custom-banner');
+    hero.src=e.target.result; hero.classList.add('visible');
+    showToast('✅ Banner uploaded & applied!');
+  };
+  reader.readAsDataURL(file);
+}
+function clearBanner(){
+  const img=document.getElementById('hero-custom-banner');
+  img.src=''; img.classList.remove('visible');
+  document.getElementById('banner-preview').style.display='none';
+  document.getElementById('banner-url').value='';
+  showToast('🔄 Banner cleared. Stadium background restored.');
+}
+
+// ----- HERO TEXT -----
+function saveHeroText(){
+  document.getElementById('hero-eyebrow-text').textContent=document.getElementById('ht-eyebrow').value;
+  document.getElementById('hero-main-text').textContent=document.getElementById('ht-main').value;
+  document.getElementById('hero-sub-text').textContent=document.getElementById('ht-sub').value;
+  document.getElementById('hero-para-text').textContent=document.getElementById('ht-para').value;
+  confetti(); showToast('✅ Hero text updated on site!');
+}
+
+// ----- ANNOUNCEMENTS -----
+function addAnnouncement(){
+  const text=document.getElementById('ann-text').value.trim();
+  const type=document.getElementById('ann-type').value;
+  if(!text){showToast('⚠️ Enter announcement text.');return;}
+  // Add to list
+  const item=document.createElement('div'); item.className='ann-item';
+  const typeLabel={bar:'BAR',offer:'OFFER',event:'EVENT'}[type];
+  const typeColor={bar:'var(--red)',offer:'var(--green)',event:'var(--blue)'}[type];
+  item.innerHTML=`<div class="ann-text"><span style="background:rgba(100,100,100,.2);color:${typeColor};padding:2px 8px;border-radius:4px;font-size:.75rem;font-family:'Rajdhani',sans-serif;font-weight:700;margin-right:8px">${typeLabel}</span>${text}</div><button class="ann-del" onclick="this.closest('.ann-item').remove()">✕</button>`;
+  document.getElementById('ann-list').appendChild(item);
+  // If bar type, push to top bar
+  if(type==='bar'){
+    document.getElementById('ann-bar-text').textContent=text;
+    document.getElementById('announcement-bar').classList.add('visible');
+    document.getElementById('announcement-bar').style.display='block';
+  }
+  document.getElementById('ann-text').value='';
+  confetti(); showToast('📢 Announcement published!');
+}
+
+// ----- OFFERS -----
+function addNewOffer(){
+  const cond=document.getElementById('no-cond').value.trim();
+  const disc=document.getElementById('no-disc').value.trim();
+  const code=document.getElementById('no-code').value.trim();
+  const min=document.getElementById('no-min').value.trim();
+  if(!cond||!disc){showToast('⚠️ Fill Condition and Discount.');return;}
+  const el=document.getElementById('offer-list');
+  const div=document.createElement('div');
+  div.style.cssText='background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:12px';
+  div.innerHTML=`<div style="font-family:\'Rajdhani\',sans-serif;font-weight:700;color:var(--gold);margin-bottom:8px">${cond} → <span>${disc}</span></div><div style="font-size:.82rem;color:var(--muted)">Code: <strong style="color:var(--gold)">${code}</strong> · Min: ${min}</div>`;
+  el.appendChild(div);
+  document.getElementById('no-cond').value='';
+  document.getElementById('no-disc').value='';
+  document.getElementById('no-code').value='';
+  document.getElementById('no-min').value='';
+  showToast('✅ Offer added!');
+}
+
+// Init announcement bar
+document.getElementById('announcement-bar').classList.add('visible');
+document.getElementById('announcement-bar').style.display='block';
+</script>
+</body>
+</html>
